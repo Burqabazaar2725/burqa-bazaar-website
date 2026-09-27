@@ -1,0 +1,4094 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burqa Bazar & Boutiques | Premium Hijab, Burqa & Abaya Collection</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Burqa Bazaar & Boutiques — Premium quality Hijab, Burqa & Abaya collection. Elegant designs, comfortable fabrics, fast delivery all over Bangladesh. Shop now!">
+    <meta name="keywords" content="burqa, hijab, abaya, borqa bazar, boutique, bangladesh, feni, online shopping, modesty fashion">
+    <meta name="author" content="Burqa Bazaar and Boutiques">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Burqa Bazar & Boutiques | Premium Hijab, Burqa & Abaya">
+    <meta property="og:description" content="Premium quality Hijab, Burqa & Abaya collection.">
+    <meta property="og:image" content="https://i.ibb.co/zW2qGsmk/file-00000000e71881f4ada02fa6792ea317.png">
+    <meta property="og:url" content="https://borqabazaarandboutiques.blogspot.com">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Burqa Bazar & Boutiques | Premium Hijab, Burqa & Abaya">
+    <meta name="twitter:description" content="Premium quality Hijab, Burqa & Abaya collection.">
+    <meta name="twitter:image" content="https://i.ibb.co/zW2qGsmk/file-00000000e71881f4ada02fa6792ea317.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#dfb15b">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://i.ibb.co/zW2qGsmk/file-00000000e71881f4ada02fa6792ea317.png">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/zW2qGsmk/file-00000000e71881f4ada02fa6792ea317.png">
+    
+    <!-- ========== GOOGLE ANALYTICS 4 ========== -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNJNKWXZNB"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HNJNKWXZNB');
+    </script>
+    <!-- ========== END GOOGLE ANALYTICS ========== -->
+    
+    <!-- ========== FIREBASE SDK + CONFIG ========== -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+      import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+      
+      const firebaseConfig = {
+        apiKey: "AIzaSyAP7DYrmoNmcRB43immaM5aUC8_s4yJ5YM",
+        authDomain: "burqa-bazaar-admin.firebaseapp.com",
+        projectId: "burqa-bazaar-admin",
+        storageBucket: "burqa-bazaar-admin.firebasestorage.app",
+        messagingSenderId: "943491293875",
+        appId: "1:943491293875:web:8ef121ac9de795789d46c6",
+        measurementId: "G-Y1XM23L85R"
+      };
+      
+      const fbApp = initializeApp(firebaseConfig);
+      const db = getFirestore(fbApp);
+      
+      // Expose to global scope
+      window.db = db;
+      window.firebaseReady = true;
+      
+      // Load products from Firebase
+      window.loadProductsFromFirebase = async function() {
+        try {
+          const querySnapshot = await getDocs(collection(db, "products"));
+          const products = [];
+          querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            products.push({
+              id: parseInt(data.id),
+              name: data.name,
+              category: data.category,
+              price: data.price === 'Coming Soon' || data.price === 'Coming soon' ? 'Coming Soon' : parseInt(data.price),
+              image: data.image,
+              badge: data.badge || null,
+              badgeText: data.badgeText || null,
+              sizes: data.sizes || ["50", "52", "54", "56"],
+              colors: data.colors || [{ name: "Black", image: data.image }],
+              images: data.images || [data.image],
+              fullDescription: data.fullDescription || `<h3>${data.name}</h3><p>${data.description || ''}</p>`
+            });
+          });
+          
+          products.sort((a, b) => a.id - b.id);
+          
+          if(typeof window.updateProductsData === 'function') {
+            window.updateProductsData(products);
+          }
+          
+          return products;
+        } catch (error) {
+          console.error("Error loading products from Firebase:", error);
+          return null;
+        }
+      };
+    </script>
+    <!-- ========== END FIREBASE ========== -->
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Store",
+      "name": "Burqa Bazaar & Boutiques",
+      "image": "https://i.ibb.co/zW2qGsmk/file-00000000e71881f4ada02fa6792ea317.png",
+      "telephone": "+8801832140613",
+      "email": "burqabazaarabdboutiques@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "ফেনী সওদাগর পট্টি, সওদাগর টাওয়ার, ২য় তলা, দোকান নং ০৩",
+        "addressLocality": "Feni",
+        "addressCountry": "BD"
+      },
+      "priceRange": "৳৳"
+    }
+    </script>
+
+    <style>
+        :root {
+            --primary-color: #dfb15b;
+            --gold-color: #dfb15b;
+            --secondary-color: #121214;
+            --bg-color: #0b0b0d;
+            --card-bg: rgba(22, 22, 26, 0.85);
+            --text-color: #f3f3f6;
+            --text-muted: #9e9ea6;
+            --border-color: rgba(223, 177, 91, 0.2);
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Poppins', sans-serif;
+        }
+
+        [data-theme="light"] {
+            --primary-color: #9c7526;
+            --gold-color: #9c7526;
+            --secondary-color: #eaeaea;
+            --bg-color: #f7f7f9;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-color: #1a1a1e;
+            --text-muted: #66666d;
+            --border-color: rgba(156, 117, 38, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-body);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1, h2, h3, h4, .brand-title, .welcome-title, .collections-header, .category-title-label, .details-title, .product-title {
+            font-family: var(--font-heading);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 70px;
+            background-image: radial-gradient(circle at 50% 0%, rgba(223, 177, 91, 0.05) 0%, transparent 60%);
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .brand-title, .welcome-title, .collections-header, .category-title-label {
+            background: linear-gradient(90deg, #ff007f, #7928ca, #ffb15b, #00dfd8, #ff007f);
+            background-size: 300% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: rgbTextShimmer 6s linear infinite;
+        }
+
+        @keyframes rgbTextShimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 300% center; }
+        }
+
+        .page-content-box h2 {
+            background: linear-gradient(90deg, #ff007f, #7928ca, #ffb15b, #00dfd8, #ff007f);
+            background-size: 300% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: rgbTextShimmer 6s linear infinite;
+            text-shadow: 0 0 15px rgba(223, 177, 91, 0.3);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        #reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(90deg, #ff007f, #7928ca, #ffb15b, #00dfd8);
+            background-size: 300% auto;
+            animation: rgbTextShimmer 4s linear infinite;
+            z-index: 9999;
+            transition: width 0.15s ease-out;
+            box-shadow: 0 0 12px rgba(223, 177, 91, 0.6);
+        }
+
+        #skeleton-loader {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--bg-color);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        #skeleton-loader.hidden { opacity: 0; visibility: hidden; }
+        .loader-logo {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--gold-color);
+            animation: spinLoader 1s linear infinite;
+            overflow: hidden;
+            background: #000;
+        }
+        .loader-logo img { width: 100%; height: 100%; object-fit: cover; }
+        @keyframes spinLoader { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .loader-text {
+            font-family: var(--font-heading);
+            font-size: 16px; font-weight: 700;
+            background: linear-gradient(90deg, #ff007f, #7928ca, #ffb15b, #00dfd8, #ff007f);
+            background-size: 300% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: rgbTextShimmer 3s linear infinite;
+            letter-spacing: 2px;
+        }
+        .loader-dots { display: flex; gap: 6px; }
+        .loader-dots span {
+            width: 8px; height: 8px;
+            background: var(--gold-color);
+            border-radius: 50%;
+            animation: bounceDot 1.2s ease-in-out infinite;
+        }
+        .loader-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .loader-dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes bounceDot { 0%, 80%, 100% { transform: scale(0.7); opacity: 0.5; } 40% { transform: scale(1.2); opacity: 1; } }
+
+        body.content-ready { animation: pageFadeIn 0.5s ease; }
+        @keyframes pageFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        header.shrunk .header-container { padding: 8px 15px; }
+        header.shrunk .header-logo-circle { width: 30px; height: 30px; }
+        header.shrunk .brand-title { font-size: 11px; }
+
+        .header-logo-circle { animation: logoGlow 3s ease-in-out infinite; }
+        @keyframes logoGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(223, 177, 91, 0.25); }
+            50% { box-shadow: 0 0 20px rgba(223, 177, 91, 0.6); }
+        }
+
+        .cart-icon-wrapper.bounce { animation: cartBounce 0.6s ease; }
+        @keyframes cartBounce {
+            0%, 100% { transform: scale(1); }
+            30% { transform: scale(1.3); }
+            50% { transform: scale(0.9); }
+            70% { transform: scale(1.15); }
+        }
+
+        #back-to-top {
+            position: fixed;
+            bottom: 155px; right: 20px;
+            width: 45px; height: 45px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1.5px solid var(--gold-color);
+            color: var(--gold-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 2050;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        #back-to-top.visible { opacity: 1; visibility: visible; }
+        #back-to-top:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(223, 177, 91, 0.4);
+            background: var(--gold-color);
+            color: #0b0b0d;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            z-index: 6;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            color: #fff;
+        }
+        .product-badge.new { background: linear-gradient(135deg, #00dfd8, #00a99d); }
+        .product-badge.sale { background: linear-gradient(135deg, #ff007f, #d6006b); }
+        .product-badge.hot { background: linear-gradient(135deg, #ff6b00, #d94f00); }
+        .product-badge.soldout { background: linear-gradient(135deg, #666, #333); }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+        .product-rating .stars { color: #ffb800; letter-spacing: -1px; font-size: 12px; }
+        .product-rating .review-count { font-size: 10px; opacity: 0.7; }
+
+        .rating-summary {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+        .rating-average-box {
+            text-align: center;
+            min-width: 70px;
+            padding-right: 15px;
+            border-right: 1px solid var(--border-color);
+        }
+        .rating-average {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--gold-color);
+            line-height: 1;
+            font-family: var(--font-heading);
+        }
+        .rating-average-stars { color: #ffb800; font-size: 14px; margin-top: 4px; }
+        .rating-total { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+        .rating-bars { flex: 1; }
+        .rating-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            margin-bottom: 3px;
+        }
+        .rating-bar-row .star-label {
+            min-width: 25px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+        .rating-bar-track {
+            flex: 1;
+            height: 6px;
+            background: var(--card-bg);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .rating-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ffb800, #ffd700);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+        .rating-bar-count {
+            min-width: 20px;
+            color: var(--text-muted);
+            font-size: 10px;
+            text-align: right;
+        }
+
+        .review-section {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--border-color);
+        }
+        .review-section h3 {
+            color: var(--gold-color);
+            margin-bottom: 15px;
+            font-size: 16px;
+            font-family: var(--font-heading);
+        }
+        .star-picker {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 12px;
+            font-size: 28px;
+            cursor: pointer;
+        }
+        .star-picker .star {
+            color: var(--border-color);
+            transition: color 0.15s ease, transform 0.15s ease;
+        }
+        .star-picker .star:hover,
+        .star-picker .star.active {
+            color: #ffb800;
+            transform: scale(1.15);
+        }
+        .review-input, .review-textarea {
+            width: 100%;
+            padding: 10px 12px;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-size: 13px;
+            outline: none;
+            margin-bottom: 10px;
+            font-family: inherit;
+        }
+        .review-input:focus, .review-textarea:focus { border-color: var(--gold-color); }
+        .submit-review-btn {
+            background: var(--gold-color);
+            color: #0b0b0d;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+        .submit-review-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        .review-list {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .review-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px 15px;
+        }
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .review-name { font-weight: 700; font-size: 13px; color: var(--text-color); }
+        .review-stars { color: #ffb800; font-size: 12px; }
+        .review-text { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+        .review-date { font-size: 10px; color: var(--text-muted); opacity: 0.6; margin-top: 4px; }
+
+        .related-section {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid var(--border-color);
+        }
+        .related-title {
+            font-family: var(--font-heading);
+            font-size: 18px;
+            color: var(--gold-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        @media (min-width: 600px) {
+            .related-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .wishlist-btn {
+            position: absolute;
+            top: 10px; right: 10px;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1.5px solid var(--border-color);
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            cursor: pointer;
+            z-index: 5;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+        .wishlist-btn:hover { border-color: var(--gold-color); color: var(--gold-color); transform: scale(1.1); }
+        .wishlist-btn.active { background: #ff007f; border-color: #ff007f; color: #fff; animation: heartBeat 0.5s ease; }
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(1.1); }
+            75% { transform: scale(1.25); }
+        }
+
+        .share-btn {
+            background: var(--bg-color);
+            border: 1.5px solid var(--border-color);
+            color: var(--text-color);
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: inherit;
+        }
+        .share-btn:hover { border-color: var(--gold-color); color: var(--gold-color); transform: translateY(-2px); }
+
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(0);
+            animation: rippleAnim 0.6s ease-out;
+            pointer-events: none;
+        }
+        @keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
+
+        #share-modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 8000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        #share-modal.active { display: flex; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .share-modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--gold-color);
+            border-radius: 16px;
+            padding: 25px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        }
+        .share-modal-content h3 {
+            font-family: var(--font-heading);
+            color: var(--gold-color);
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        .share-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .share-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 15px;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 12px;
+            color: var(--text-color);
+        }
+        .share-option:hover { border-color: var(--gold-color); transform: translateY(-2px); }
+        .share-option i { font-size: 24px; }
+        .share-option.whatsapp i { color: #25d366; }
+        .share-option.facebook i { color: #1877f2; }
+        .share-option.twitter i { color: #1da1f2; }
+        .share-option.copy i { color: var(--gold-color); }
+        .share-modal-close {
+            margin-top: 15px;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .premium-contact-grid {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+            gap: 12px !important;
+            padding: 20px !important;
+            background: linear-gradient(135deg, rgba(223, 177, 91, 0.08) 0%, rgba(223, 177, 91, 0.02) 100%) !important;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 14px !important;
+            position: relative;
+            overflow: hidden;
+        }
+        .premium-contact-grid::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(223, 177, 91, 0.05), transparent);
+            animation: shimmerMove 6s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes shimmerMove {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        .premium-contact-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            z-index: 1;
+        }
+        .premium-contact-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--gold-color);
+            box-shadow: 0 8px 25px rgba(223, 177, 91, 0.2);
+        }
+        .premium-contact-icon-img {
+            width: 40px; height: 40px;
+            object-fit: contain;
+            flex-shrink: 0;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        .premium-contact-card:hover .premium-contact-icon-img { transform: scale(1.15); }
+        .premium-contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+            flex: 1;
+        }
+        .premium-contact-label {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            color: var(--gold-color);
+            text-transform: uppercase;
+        }
+        .premium-contact-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+        .premium-contact-value:hover { color: var(--gold-color); }
+
+        .page-content-box.animated > * {
+            opacity: 0;
+            transform: translateY(25px);
+        }
+        .page-content-box.animated > *.reveal-now {
+            animation: fadeSlideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        @keyframes fadeSlideIn {
+            0% { opacity: 0; transform: translateY(25px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .page-content-box h3 {
+            position: relative;
+            padding-left: 4px;
+            transition: color 0.3s ease;
+        }
+        .page-content-box h3::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%) scaleX(0);
+            transform-origin: left;
+            width: 4px;
+            height: 70%;
+            background: linear-gradient(180deg, #ff007f, #ffb15b);
+            border-radius: 4px;
+            transition: transform 0.4s ease;
+        }
+        .page-content-box h3.reveal-now::before {
+            transform: translateY(-50%) scaleX(1);
+        }
+        .page-content-box .info-card {
+            background: linear-gradient(135deg, rgba(223, 177, 91, 0.08) 0%, rgba(223, 177, 91, 0.03) 100%);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--gold-color);
+            padding: 18px 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .page-content-box .info-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 25px rgba(223, 177, 91, 0.15);
+            border-left-color: #ffb15b;
+        }
+        .page-content-box .contact-highlight {
+            background: linear-gradient(135deg, rgba(223, 177, 91, 0.15) 0%, rgba(223, 177, 91, 0.05) 100%);
+            border: 1px solid var(--gold-color);
+            padding: 20px 22px;
+            border-radius: 12px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-content-box ul:not([style*="padding-left: 20px"]) {
+            list-style: none;
+            padding-left: 0;
+        }
+        .page-content-box ul li::marker { color: var(--gold-color); }
+        .page-content-box .policy-footer {
+            text-align: center;
+            margin-top: 35px;
+            padding: 25px 20px;
+            background: linear-gradient(135deg, rgba(223, 177, 91, 0.05) 0%, transparent 100%);
+            border-top: 1px dashed var(--border-color);
+            border-bottom: 1px dashed var(--border-color);
+            border-radius: 10px;
+        }
+
+        header {
+            background-color: var(--secondary-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            transition: padding 0.3s ease;
+        }
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .menu-icon, .header-right-icons i {
+            font-size: 20px;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+        .header-brand { display: flex; align-items: center; gap: 8px; }
+        .header-logo-circle {
+            width: 35px; height: 35px
+                  border-radius: 50%;
+    border: 1.5px solid var(--gold-color);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    flex-shrink: 0;
+    transition: width 0.3s ease, height 0.3s ease;
+}
+.header-logo-circle img { width: 100%; height: 100%; object-fit: cover; }
+.brand-title { font-size: 12px; letter-spacing: 0.3px; }
+.header-right-icons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+}
+.header-theme-btn {
+    width: 35px; height: 35px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--gold-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    outline: none;
+    padding: 0;
+}
+.header-theme-btn .fa-sun { display: none; }
+.header-theme-btn .fa-moon { display: block; }
+[data-theme="light"] .header-theme-btn .fa-sun { display: block; }
+[data-theme="light"] .header-theme-btn .fa-moon { display: none; }
+.cart-badge {
+    position: absolute;
+    top: -8px; right: -10px;
+    background: var(--gold-color);
+    color: #0b0b0d;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 1px 5px;
+    border-radius: 50%;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    height: 100%;
+    background-color: var(--secondary-color);
+    box-shadow: 5px 0 25px rgba(0,0,0,0.7);
+    z-index: 3000;
+    transition: left 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-color);
+}
+.sidebar.active { left: 0; }
+.sidebar-header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+.close-sidebar { font-size: 20px; cursor: pointer; color: var(--text-color); }
+.sidebar-menu { list-style: none; padding: 20px; flex: 1; overflow-y: auto; }
+.sidebar-menu li { margin-bottom: 20px; }
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+.sidebar-menu a i { color: var(--gold-color); width: 20px; }
+.theme-switch-box {
+    padding: 20px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.theme-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 2500;
+    display: none;
+    backdrop-filter: blur(4px);
+}
+.overlay.active { display: block; }
+
+.search-section { padding: 12px 15px; }
+.search-box { position: relative; width: 100%; }
+.search-box input {
+    width: 100%;
+    padding: 12px 15px 12px 40px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    color: var(--text-color);
+    font-size: 14px;
+    outline: none;
+    backdrop-filter: blur(10px);
+}
+.search-box input::placeholder { color: var(--text-muted); }
+.search-box i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold-color);
+}
+
+.container { padding: 15px; max-width: 1200px; margin: auto; }
+.welcome-section { text-align: center; margin: 15px 0 25px; }
+.welcome-title { font-size: 16px; margin-bottom: 18px; text-transform: uppercase; }
+.center-logo-container { display: flex; justify-content: center; margin-bottom: 20px; }
+.center-logo-circle {
+    width: 90px; height: 90px;
+    border-radius: 50%;
+    border: 2px solid var(--gold-color);
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 0 20px rgba(223, 177, 91, 0.3);
+}
+.center-logo-circle img { width: 100%; height: 100%; object-fit: cover; }
+.promo-banner {
+    width: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    margin-bottom: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.promo-banner img { width: 100%; height: auto; display: block; }
+.collections-header {
+    font-size: 17px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+}
+.collection-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    margin-bottom: 25px;
+    cursor: pointer;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+.collection-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold-color);
+    box-shadow: 0 12px 30px rgba(223, 177, 91, 0.2);
+}
+.collection-card img { width: 100%; height: auto; display: block; }
+.category-title-label {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 12px 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.page-section { display: none; padding: 20px 0; }
+.page-section.active-page { display: block; }
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 15px;
+    text-align: left;
+}
+@media (min-width: 768px) {
+    .product-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+}
+
+.product-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    cursor: pointer;
+    position: relative;
+}
+.product-card:hover { transform: translateY(-5px); border-color: var(--gold-color); }
+.product-img-box {
+    width: 100%;
+    height: 190px;
+    overflow: hidden;
+    background: #000;
+    position: relative;
+}
+.product-img-box img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+.product-card:hover .product-img-box img { transform: scale(1.08); }
+.product-img-box::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    transition: left 0.7s ease;
+    pointer-events: none;
+}
+.product-card:hover .product-img-box::after { left: 100%; }
+.product-info {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+.product-category-tag {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--gold-color);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+.product-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-color);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.product-price-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-color);
+}
+.product-price {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--gold-color);
+}
+.add-to-cart-grid-btn {
+    background: var(--gold-color);
+    color: #0b0b0d;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+.add-to-cart-grid-btn:hover { opacity: 0.85; }
+
+.product-details-container {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 20px;
+    max-width: 900px;
+    margin: auto;
+    text-align: left;
+    backdrop-filter: blur(12px);
+}
+.main-image-preview {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 15px;
+    cursor: zoom-in;
+    background: #000;
+}
+.details-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+.details-price {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold-color);
+    margin-bottom: 15px;
+}
+.details-desc-box {
+    line-height: 1.8;
+    font-size: 14px;
+    color: var(--text-color);
+    margin-top: 15px;
+}
+.details-desc-box h3 {
+    color: var(--gold-color);
+    margin: 20px 0 10px 0;
+    font-size: 16px;
+}
+.details-desc-box ul { padding-left: 20px; margin-bottom: 15px; }
+.details-desc-box ul li { margin-bottom: 6px; }
+
+.option-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold-color);
+    margin-top: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.option-label .selected-info {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-left: auto;
+}
+.size-options-box { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+.size-btn {
+    background: var(--bg-color);
+    border: 1.5px solid var(--border-color);
+    color: var(--text-color);
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+.size-btn:hover { border-color: var(--gold-color); }
+.size-btn.selected {
+    background: var(--gold-color);
+    color: #0b0b0d;
+    border-color: var(--gold-color);
+    box-shadow: 0 0 15px rgba(223, 177, 91, 0.4);
+}
+.color-options-box { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+.color-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-color);
+    border: 1.5px solid var(--border-color);
+    color: var(--text-color);
+    padding: 6px 12px 6px 6px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+.color-btn:hover { border-color: var(--gold-color); }
+.color-btn.selected {
+    background: var(--gold-color);
+    color: #0b0b0d;
+    border-color: var(--gold-color);
+    box-shadow: 0 0 15px rgba(223, 177, 91, 0.4);
+}
+.color-btn.selected .color-name { color: #0b0b0d; }
+.color-swatch {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    object-fit: cover;
+    flex-shrink: 0;
+}
+.color-btn.selected .color-swatch { border-color: #0b0b0d; }
+.color-name { font-size: 12px; font-weight: 600; white-space: nowrap; }
+
+.selection-warning {
+    font-size: 12px;
+    color: #ff9999;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    display: none;
+}
+.selection-warning.show { display: block; }
+.cart-item-meta {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    display: block;
+}
+
+#image-modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 7000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(8px);
+}
+#image-modal.active { display: flex; }
+#image-modal img {
+    max-width: 90%;
+    max-height: 85vh;
+    border-radius: 10px;
+    border: 2px solid var(--gold-color);
+    object-fit: contain;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+}
+.modal-close-btn {
+    position: absolute;
+    top: 25px; right: 25px;
+    background: var(--card-bg);
+    color: var(--gold-color);
+    border: 1px solid var(--gold-color);
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 7100;
+}
+.modal-close-btn:hover { background: var(--gold-color); color: #0b0b0d; }
+
+.page-content-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 35px 25px;
+    border-radius: 16px;
+    text-align: left;
+    line-height: 1.8;
+    max-width: 950px;
+    margin: auto;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+}
+.page-content-box h2 {
+    margin-bottom: 25px;
+    font-size: 24px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.form-group { margin-bottom: 15px; text-align: left; }
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--gold-color);
+}
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 14px;
+    outline: none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--gold-color);
+}
+
+.payment-methods-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+    margin-top: 10px;
+}
+.payment-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.payment-option img {
+    width: 32px; height: 32px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.instruction-box {
+    background: var(--bg-color);
+    border: 1px dashed var(--gold-color);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    text-align: left;
+    display: none;
+}
+.instruction-box h4 {
+    color: var(--gold-color);
+    font-size: 14px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.instruction-box p {
+    font-size: 13px;
+    color: var(--text-color);
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+.number-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-top: 8px;
+    margin-bottom: 12px;
+}
+.copy-btn {
+    background: var(--gold-color);
+    color: #0b0b0d;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+.copy-btn:hover { opacity: 0.85; }
+
+.cart-item-img {
+    width: 50px; height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+.qty-control {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    padding: 2px 6px;
+    border-radius: 6px;
+}
+.qty-btn {
+    background: var(--card-bg);
+    color: var(--gold-color);
+    border: 1px solid var(--border-color);
+    width: 24px; height: 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.qty-btn:hover { border-color: var(--gold-color); }
+.remove-item-btn {
+    background: #ff4d4d;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+.remove-item-btn:hover { opacity: 0.85; }
+
+.site-footer {
+    background-color: var(--secondary-color);
+    border-top: 1px solid var(--border-color);
+    padding: 40px 20px 30px 20px;
+    margin-top: 40px;
+    color: var(--text-color);
+}
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.footer-section h4 {
+    color: var(--gold-color);
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+}
+.footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.footer-links li a {
+    color: var(--text-color);
+    font-size: 14px;
+    transition: color 0.2s ease;
+}
+.footer-links li a:hover { color: var(--gold-color); }
+.footer-bottom-text {
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.whatsapp-chat-btn {
+    position: fixed;
+    bottom: 85px; right: 20px;
+    background-color: #25d366;
+    color: #fff;
+    width: 55px; height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    z-index: 2100;
+    cursor: pointer;
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0; left: 0;
+    width: 100%;
+    background-color: var(--secondary-color);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    z-index: 2000;
+    backdrop-filter: blur(12px);
+}
+.bottom-nav-item {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    cursor: pointer;
+    background: none;
+    border: none;
+    outline: none;
+}
+.bottom-nav-item i { font-size: 18px; }
+.bottom-nav-item.active { color: var(--gold-color); }
+
+#custom-toast {
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--card-bg);
+    border: 1px solid var(--gold-color);
+    color: var(--text-color);
+    padding: 12px 20px;
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    z-index: 6000;
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease, visibility 0.4s ease;
+    backdrop-filter: blur(12px);
+}
+#custom-toast.toast-visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+.toast-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 600;
+}
+.toast-icon { font-size: 16px; }
+
+/* ===== MINI CART SIDEBAR ===== */
+#mini-cart-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 4000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+#mini-cart-overlay.active { opacity: 1; visibility: visible; }
+#mini-cart-sidebar {
+    position: fixed;
+    top: 0; right: -420px;
+    width: 380px;
+    max-width: 90vw;
+    height: 100%;
+    background-color: var(--secondary-color);
+    box-shadow: -8px 0 35px rgba(0, 0, 0, 0.7);
+    z-index: 4100;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    border-left: 1px solid var(--border-color);
+}
+#mini-cart-sidebar.active { right: 0; }
+.mini-cart-header {
+    padding: 18px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+.mini-cart-header h3 {
+    font-family: var(--font-heading);
+    color: var(--gold-color);
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.mini-cart-close {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+.mini-cart-close:hover { background: var(--gold-color); color: #0b0b0d; border-color: var(--gold-color); }
+.mini-cart-body { flex: 1; overflow-y: auto; padding: 15px 20px; }
+.mini-cart-empty { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+.mini-cart-empty i { font-size: 60px; color: var(--gold-color); display: block; margin-bottom: 15px; opacity: 0.6; }
+.mini-cart-empty p { font-size: 14px; margin-bottom: 20px; }
+.mini-cart-shop-btn {
+    background: var(--gold-color);
+    color: #0b0b0d;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+}
+.mini-cart-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+}
+.mini-cart-item-img {
+    width: 60px; height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+.mini-cart-item-info { flex: 1; min-width: 0; }
+.mini-cart-item-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-color);
+    line-height: 1.3;
+    margin-bottom: 4px;
+}
+.mini-cart-item-meta { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+.mini-cart-item-price { font-size: 13px; color: var(--gold-color); font-weight: 700; }
+.mini-cart-item-remove {
+    position: absolute;
+    top: 12px; right: 0;
+    background: transparent;
+    border: none;
+    color: #ff4d4d;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 4px;
+}
+.mini-cart-footer {
+    padding: 15px 20px 20px;
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-color);
+}
+.mini-cart-subtotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 15px;
+    font-weight: 700;
+}
+.mini-cart-subtotal span:first-child { color: var(--text-muted); }
+.mini-cart-subtotal span:last-child { color: var(--gold-color); font-size: 18px; }
+.mini-cart-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mini-cart-btn {
+    padding: 11px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+    border: none;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.mini-cart-btn.view-cart {
+    background: transparent;
+    border: 1.5px solid var(--border-color);
+    color: var(--text-color);
+}
+.mini-cart-btn.view-cart:hover { border-color: var(--gold-color); color: var(--gold-color); }
+.mini-cart-btn.checkout { background: var(--gold-color); color: #0b0b0d; }
+.mini-cart-btn.checkout:hover { opacity: 0.85; }
+
+/* ===== NEWSLETTER ===== */
+.newsletter-section {
+    background: linear-gradient(135deg, rgba(223, 177, 91, 0.12) 0%, rgba(223, 177, 91, 0.03) 100%);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 25px 20px;
+    text-align: center;
+    margin-top: 10px;
+}
+.newsletter-section h4 {
+    font-family: var(--font-heading);
+    color: var(--gold-color);
+    font-size: 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.newsletter-section p { font-size: 13px; color: var(--text-muted); margin-bottom: 15px; }
+.newsletter-form { display: flex; gap: 8px; max-width: 400px; margin: 0 auto; }
+.newsletter-form input {
+    flex: 1;
+    padding: 10px 14px;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 25px;
+    color: var(--text-color);
+    font-size: 13px;
+    outline: none;
+    font-family: inherit;
+}
+.newsletter-form input:focus { border-color: var(--gold-color); }
+.newsletter-form button {
+    padding: 10px 20px;
+    background: var(--gold-color);
+    color: #0b0b0d;
+    border: none;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+/* ===== SOCIAL ICONS ===== */
+.social-icons-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+.social-icon {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+.social-icon:hover { transform: translateY(-4px) scale(1.1); }
+.social-icon.facebook { background: linear-gradient(135deg, #1877f2, #0c5fcc); }
+.social-icon.facebook:hover { box-shadow: 0 8px 20px rgba(24, 119, 242, 0.5); }
+.social-icon.instagram { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+.social-icon.instagram:hover { box-shadow: 0 8px 20px rgba(220, 39, 67, 0.5); }
+.social-icon.whatsapp { background: linear-gradient(135deg, #25d366, #128c7e); }
+.social-icon.whatsapp:hover { box-shadow: 0 8px 20px rgba(37, 211, 102, 0.5); }
+.social-icon.youtube { background: linear-gradient(135deg, #ff0000, #c4302b
+          .social-icon.youtube:hover { box-shadow: 0 8px 20px rgba(255, 0, 0, 0.5); }
+        .social-icon.tiktok { background: linear-gradient(135deg, #000, #25f4ee, #fe2c55); }
+        .social-icon.tiktok:hover { box-shadow: 0 8px 20px rgba(254, 44, 85, 0.5); }
+    </style>
+</head>
+  <body>
+
+    <!-- Skeleton Loader -->
+    <div id="skeleton-loader">
+        <div class="loader-logo">
+            <img src="https://i.ibb.co/zW2qGsmk/file-00000000e71881f4ada02fa6792ea317.png" alt="Logo">
+        </div>
+        <div class="loader-text">BURQA BAZAAR</div>
+        <div class="loader-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <!-- Reading Progress Bar -->
+    <div id="reading-progress"></div>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" onclick="scrollToTop()" title="Back to Top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Mini Cart Sidebar -->
+    <div id="mini-cart-overlay" onclick="closeMiniCart()"></div>
+    <div id="mini-cart-sidebar">
+        <div class="mini-cart-header">
+            <h3><i class="fas fa-shopping-bag"></i> Your Cart</h3>
+            <button class="mini-cart-close" onclick="closeMiniCart()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="mini-cart-body" id="mini-cart-body"></div>
+        <div class="mini-cart-footer" id="mini-cart-footer" style="display: none;">
+            <div class="mini-cart-subtotal">
+                <span>Subtotal:</span>
+                <span id="mini-cart-subtotal">৳ 0</span>
+            </div>
+            <div class="mini-cart-actions">
+                <button class="mini-cart-btn view-cart" onclick="closeMiniCart(); switchTab('cart');">
+                    <i class="fas fa-eye"></i> View Cart
+                </button>
+                <button class="mini-cart-btn checkout" onclick="closeMiniCart(); switchTab('cart');">
+                    <i class="fas fa-arrow-right"></i> Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Zoom Lightbox Modal -->
+    <div id="image-modal" onclick="closeImageModal()">
+        <button class="modal-close-btn" onclick="closeImageModal()">&times;</button>
+        <img id="modal-zoomed-img" src="" alt="Zoomed Image">
+    </div>
+
+    <!-- Share Modal -->
+    <div id="share-modal" onclick="closeShareModal(event)">
+        <div class="share-modal-content" onclick="event.stopPropagation()">
+            <h3>🔗 Share This Product</h3>
+            <div class="share-options">
+                <a class="share-option whatsapp" id="share-whatsapp" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </a>
+                <a class="share-option facebook" id="share-facebook" target="_blank">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
+                </a>
+                <a class="share-option twitter" id="share-twitter" target="_blank">
+                    <i class="fab fa-twitter"></i>
+                    <span>Twitter</span>
+                </a>
+                <button class="share-option copy" onclick="copyProductLink()">
+                    <i class="fas fa-link"></i>
+                    <span>Copy Link</span>
+                </button>
+            </div>
+            <button class="share-modal-close" onclick="closeShareModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3 class="brand-title">Burqa Bazaar & Boutiques</h3>
+            <i class="fas fa-times close-sidebar" id="closeSidebar"></i>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#" onclick="switchTab('home')"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#" onclick="switchTab('shop')"><i class="fas fa-shopping-bag"></i> Shop</a></li>
+            <li><a href="#" onclick="switchTab('about')"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li><a href="#" onclick="switchTab('privacy')"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+            <li><a href="#" onclick="switchTab('terms')"><i class="fas fa-file-contract"></i> Terms & Conditions</a></li>
+            <li><a href="#" onclick="switchTab('return-policy')"><i class="fas fa-undo"></i> Return Policy</a></li>
+            <li><a href="#" onclick="switchTab('contact')"><i class="fas fa-headset"></i> Contact Us</a></li>
+            <li><a href="#" onclick="switchTab('track-order')"><i class="fas fa-truck"></i> Track Order</a></li>
+        </ul>
+        <div class="theme-switch-box">
+            <span>Appearance</span>
+            <button class="theme-btn" id="sidebarThemeToggleBtn">
+                <i class="fas fa-moon" id="themeIcon"></i> <span id="themeText">Dark</span>
+            </button>
+        </div>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Header Section -->
+    <header id="main-header">
+        <div class="header-container">
+            <div class="header-left">
+                <i class="fas fa-bars menu-icon" id="openSidebar"></i>
+                <div class="header-brand">
+                    <div class="header-logo-circle">
+                        <img src="https://i.ibb.co/zW2qGsmk/file-00000000e71881f4ada02fa6792ea317.png" alt="Logo">
+                    </div>
+                    <span class="brand-title">Burqa Bazar and Boutiques</span>
+                </div>
+            </div>
+            <div class="header-right-icons">
+                <button class="header-theme-btn" id="headerThemeToggleBtn" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
+
+                <div class="cart-icon-wrapper" id="cart-icon-wrapper" style="position: relative; cursor: pointer;" onclick="openMiniCart()">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Bar Section -->
+    <div class="search-section">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search-input" placeholder="Search for hijabs, burqas, abayas..." onkeyup="filterProductsBySearch()">
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        
+        <!-- HOME PAGE SECTION -->
+        <div id="home-section" class="page-section active-page">
+            <div class="welcome-section">
+                <h1 class="welcome-title">WELCOME TO BURQA BAZAR AND BOUTIQUES ✨</h1>
+                <div class="center-logo-container">
+                    <div class="center-logo-circle">
+                        <img src="https://i.ibb.co/zW2qGsmk/file-00000000e71881f4ada02fa6792ea317.png" alt="Center Logo">
+                    </div>
+                </div>
+            </div>
+
+            <div class="promo-banner">
+                <img src="https://i.ibb.co/V8xTN72/file-000000004028820a835dbfabe40a11d2.png" alt="Promo Banner">
+            </div>
+
+            <div class="collections-header">
+                OUR COLLECTIONS 👑
+            </div>
+
+            <div class="collection-card" onclick="filterCategory('Hijab Collection')">
+                <img src="https://i.ibb.co/4wC0HvpY/file-000000009984820a9c9055b3825a6e4d.png" alt="Hijab Collection">
+                <div class="category-title-label">Hijab Collection</div>
+            </div>
+
+            <div class="collection-card" onclick="filterCategory('Burqa Collection')">
+                <img src="https://i.ibb.co/MDY6hRPD/file-00000000402c81f59cebd8386e0168fa.png" alt="Burqa Collection">
+                <div class="category-title-label">Burqa Collection</div>
+            </div>
+
+            <div class="collection-card" onclick="filterCategory('Abaya Collection')">
+                <img src="https://i.ibb.co/5xL819P1/file-00000000d28c81fd9ec292317481a8ff.png" alt="Abaya Collection">
+                <div class="category-title-label">Abaya Collection</div>
+            </div>
+        </div>
+
+        <!-- SHOP PAGE SECTION -->
+        <div id="shop-section" class="page-section">
+            <h2 id="shop-title" style="margin-bottom: 5px;">Shop All Collections</h2>
+            <p id="shop-desc" style="color: var(--text-muted); margin-bottom: 20px;">Explore our exclusive range of premium hijabs, burqas, and abayas.</p>
+            
+            <div class="product-grid" id="product-grid-container">
+                <!-- Dynamic Products -->
+            </div>
+        </div>
+
+        <!-- PRODUCT DETAILS PAGE SECTION -->
+        <div id="product-details-section" class="page-section">
+            <div class="product-details-container" id="product-details-content">
+                <!-- Dynamic Product Details will load here -->
+            </div>
+        </div>
+
+       <!-- ABOUT US PAGE SECTION -->
+<div id="about-section" class="page-section">
+    <div class="page-content-box">
+        <h2 style="text-align: center; margin-bottom: 25px;">🌸 আমাদের সম্পর্কে | About Us</h2>
+        
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-bottom: 10px;">স্বাগতম Burqa Bazaar and Boutiques-এ</h3>
+        <p style="margin-bottom: 15px;"><strong>Burqa Bazaar and Boutiques</strong> হলো শালীনতা, সৌন্দর্য ও আধুনিক রুচির সমন্বয়ে গড়ে ওঠা একটি ফ্যাশন ব্র্যান্ড। নারীদের জন্য মানসম্মত ও আকর্ষণীয় <strong>হিজাব, বোরকা ও আবায়া</strong> সংগ্রহ সহজলভ্য করাই আমাদের প্রধান লক্ষ্য।</p>
+        <p style="margin-bottom: 20px;">আমরা বিশ্বাস করি, শালীন পোশাক শুধু একটি পোশাক নয়—এটি ব্যক্তিত্ব, রুচি ও আত্মবিশ্বাস প্রকাশের একটি সুন্দর মাধ্যম। তাই প্রতিটি পণ্যের ডিজাইন, কাপড়ের মান, রঙ ও ফিনিশিংয়ের প্রতি আমরা বিশেষ গুরুত্ব দেওয়ার চেষ্টা করি।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-bottom: 10px;">✨ আমাদের কালেকশন</h3>
+        <p style="margin-bottom: 10px;">আমাদের কালেকশনে রয়েছে—</p>
+        <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.8;">
+            <li>🌷 Hijab Collection</li>
+            <li>🖤 Burqa Collection</li>
+            <li>🤍 Abaya Collection</li>
+        </ul>
+        <p style="margin-bottom: 20px;">দৈনন্দিন ব্যবহার থেকে শুরু করে অফিস, দাওয়াত, পার্টি, বিয়ে ও বিশেষ আয়োজন—বিভিন্ন প্রয়োজন অনুযায়ী আমাদের কালেকশনে রয়েছে নানা ধরনের ডিজাইন ও রঙের সমাহার।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-bottom: 10px;">💎 আমাদের লক্ষ্য</h3>
+        <p style="margin-bottom: 20px;">আমাদের লক্ষ্য হলো এমন একটি বিশ্বস্ত ফ্যাশন শপ তৈরি করা, যেখানে গ্রাহকরা সুন্দর ডিজাইন, মানসম্মত পণ্য এবং আন্তরিক সেবা—সবকিছু একসঙ্গে পাবেন। আমরা প্রতিটি অর্ডারকে গুরুত্বের সঙ্গে বিবেচনা করি এবং গ্রাহকের সন্তুষ্টিকে আমাদের ব্যবসার অন্যতম প্রধান অগ্রাধিকার হিসেবে দেখি।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-bottom: 10px;">🤝 কেন Burqa Bazaar and Boutiques?</h3>
+        <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.8;">
+            <li>✔️ আকর্ষণীয় ও মার্জিত ডিজাইন</li>
+            <li>✔️ বিভিন্ন রঙ ও স্টাইলের কালেকশন</li>
+            <li>✔️ মানসম্মত পণ্যের প্রতি গুরুত্ব</li>
+            <li>✔️ গ্রাহকের প্রয়োজনকে অগ্রাধিকার</li>
+            <li>✔️ সহজ ও আন্তরিক যোগাযোগ ব্যবস্থা</li>
+            <li>✔️ অনলাইন অর্ডারের সুবিধা</li>
+            <li>✔️ গ্রাহকের সন্তুষ্টির প্রতি বিশেষ গুরুত্ব</li>
+        </ul>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-bottom: 10px;">🌿 আমাদের প্রতিশ্রুতি</h3>
+        <p style="margin-bottom: 20px;">আপনার জন্য সুন্দর ও মানসম্মত পণ্য নির্বাচন থেকে শুরু করে অর্ডার সম্পন্ন হওয়া পর্যন্ত প্রতিটি ধাপে আমরা যতটা সম্ভব ভালো সেবা দেওয়ার চেষ্টা করি। আপনার আস্থা ও সন্তুষ্টিই আমাদের এগিয়ে যাওয়ার অনুপ্রেরণা।</p>
+
+        <div class="policy-footer">
+            <p style="font-weight: bold; color: var(--gold-color); font-size: 16px; margin-bottom: 10px;">Burqa Bazaar and Boutiques</p>
+            <p style="font-style: italic; color: var(--text-muted); line-height: 1.6; margin-bottom: 15px;">
+                _প্রতিটি লুকে শালীনতা,_<br>
+                _প্রতিটি ডিজাইনে সৌন্দর্য,_<br>
+                _আর প্রতিটি পণ্যে মানের প্রতিশ্রুতি।_
+            </p>
+            <p style="font-weight: 600; font-size: 14px;">Modesty in Every Look.<br>Elegance in Every Detail.</p>
+        </div>
+    </div>
+</div>
+
+<!-- PRIVACY POLICY PAGE SECTION -->
+<div id="privacy-section" class="page-section">
+    <div class="page-content-box">
+        <h2 style="text-align: center; margin-bottom: 25px;">🔒 Privacy Policy | গোপনীয়তা নীতি</h2>
+
+        <p style="margin-bottom: 15px;"><strong>Burqa Bazaar and Boutiques</strong>-এ আপনার গোপনীয়তা ও ব্যক্তিগত তথ্যের নিরাপত্তাকে আমরা গুরুত্ব দিই। আপনি আমাদের ওয়েবসাইট ব্যবহার, অর্ডার বা যোগাযোগ করার সময় যে তথ্য প্রদান করেন, তা কীভাবে সংগ্রহ, ব্যবহার ও সুরক্ষিত করা হয়—এই Privacy Policy-তে তা ব্যাখ্যা করা হয়েছে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১. আমরা যে তথ্য সংগ্রহ করতে পারি</h3>
+        <p style="margin-bottom: 10px;">আপনি আমাদের ওয়েবসাইটে অর্ডার বা যোগাযোগ করার সময় প্রয়োজন অনুযায়ী নিম্নলিখিত তথ্য দিতে পারেন:</p>
+        <ul style="padding-left: 20px; margin-bottom: 15px; line-height: 1.8;">
+            <li>• নাম</li>
+            <li>• মোবাইল নম্বর</li>
+            <li>• ই-মেইল ঠিকানা</li>
+            <li>• শহর ও জেলার তথ্য</li>
+            <li>• থানা/উপজেলা</li>
+            <li>• সম্পূর্ণ ডেলিভারি ঠিকানা</li>
+            <li>• অর্ডার সংক্রান্ত তথ্য</li>
+            <li>• পেমেন্ট সংক্রান্ত প্রয়োজনীয় তথ্য</li>
+            <li>• আপনার দেওয়া অতিরিক্ত নোট বা নির্দেশনা</li>
+        </ul>
+        <p style="margin-bottom: 15px;">আমরা প্রয়োজনের অতিরিক্ত ব্যক্তিগত তথ্য সংগ্রহ করার চেষ্টা করি না।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">২. আপনার তথ্য কীভাবে ব্যবহার করা হয়</h3>
+        <p style="margin-bottom: 10px;">আপনার দেওয়া তথ্য নিম্নলিখিত কাজে ব্যবহার করা হতে পারে:</p>
+        <ul style="padding-left: 20px; margin-bottom: 15px; line-height: 1.8;">
+            <li>• আপনার অর্ডার গ্রহণ ও নিশ্চিত করতে</li>
+            <li>• পণ্য ডেলিভারি সম্পন্ন করতে</li>
+            <li>• আপনার সঙ্গে অর্ডার সংক্রান্ত যোগাযোগ করতে</li>
+            <li>• পেমেন্ট যাচাই করতে</li>
+            <li>• আপনার প্রশ্ন বা অভিযোগের উত্তর দিতে</li>
+            <li>• রিটার্ন/এক্সচেঞ্জ সংক্রান্ত সেবা দিতে</li>
+            <li>• আমাদের পণ্য ও সেবার মান উন্নত করতে</li>
+            <li>• ওয়েবসাইটের নিরাপত্তা ও কার্যকারিতা বজায় রাখতে</li>
+        </ul>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">৩. পেমেন্ট সংক্রান্ত তথ্য</h3>
+        <p style="margin-bottom: 10px;">আমরা Cash on Delivery (COD), bKash ও Nagad-এর মতো পেমেন্ট পদ্ধতি ব্যবহার করতে পারি।</p>
+        <p style="margin-bottom: 10px;">পেমেন্ট যাচাইয়ের প্রয়োজন হলে আপনার কাছ থেকে Sender Number বা Transaction ID-এর মতো প্রয়োজনীয় তথ্য চাওয়া হতে পারে।</p>
+        <p style="margin-bottom: 15px;">আপনার সম্পূর্ণ ব্যাংক কার্ড, PIN, OTP, bKash PIN বা Nagad PIN আমাদের কাছে পাঠানোর প্রয়োজন নেই। কোনো অবস্থাতেই আপনার PIN বা OTP কারও সঙ্গে শেয়ার করবেন না।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">৪. ডেলিভারি ও কুরিয়ার সার্ভিস</h3>
+        <p style="margin-bottom: 10px;">আপনার অর্ডার পৌঁছে দেওয়ার জন্য প্রয়োজনীয় তথ্য সংশ্লিষ্ট কুরিয়ার/ডেলিভারি সার্ভিসের সঙ্গে শেয়ার করা হতে পারে। যেমন:</p>
+        <ul style="padding-left: 20px; margin-bottom: 10px; line-height: 1.8;">
+            <li>• নাম</li>
+            <li>• মোবাইল নম্বর</li>
+            <li>• ডেলিভারি ঠিকানা</li>
+            <li>• অর্ডার বা পার্সেল সংক্রান্ত প্রয়োজনীয় তথ্য</li>
+        </ul>
+        <p style="margin-bottom: 15px;">এই তথ্য শুধুমাত্র অর্ডার ডেলিভারি ও সংশ্লিষ্ট সেবা প্রদানের প্রয়োজন অনুযায়ী ব্যবহার করা হবে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">৫. তথ্যের নিরাপত্তা</h3>
+        <p style="margin-bottom: 10px;">আপনার ব্যক্তিগত তথ্য সুরক্ষিত রাখার জন্য আমরা যুক্তিসঙ্গত নিরাপত্তামূলক ব্যবস্থা গ্রহণ করার চেষ্টা করি।</p>
+        <p style="margin-bottom: 15px;">তবে ইন্টারনেটের মাধ্যমে কোনো তথ্য আদান-প্রদানই শতভাগ নিরাপদ—এমন নিশ্চয়তা দেওয়া সম্ভব নয়। তাই অনলাইনে ব্যক্তিগত তথ্য দেওয়ার সময় সতর্ক থাকার পরামর্শ দেওয়া হচ্ছে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">৬. Cookies ও Website Data</h3>
+        <p style="margin-bottom: 10px;">আমাদের ওয়েবসাইটের কার্যকারিতা উন্নত করতে বা ব্যবহারকারীর অভিজ্ঞতা সহজ করতে Cookies বা অনুরূপ প্রযুক্তি ব্যবহার করা হতে পারে।</p>
+        <p style="margin-bottom: 10px;">Cookies আপনার ব্রাউজারে সংরক্ষিত ছোট ডেটা ফাইল, যা ওয়েবসাইটের কিছু ফিচার সঠিকভাবে কাজ করতে সাহায্য করতে পারে।</p>
+        <p style="margin-bottom: 15px;">আপনি চাইলে আপনার ব্রাউজারের Settings থেকে Cookies নিয়ন্ত্রণ বা বন্ধ করতে পারেন। তবে এতে ওয়েবসাইটের কিছু ফিচার সঠিকভাবে কাজ নাও করতে পারে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">৭. তৃতীয় পক্ষের সেবা</h3>
+        <p style="margin-bottom: 10px;">আমাদের ওয়েবসাইটে প্রয়োজন অনুযায়ী তৃতীয় পক্ষের কিছু সেবা বা ওয়েবসাইটের লিংক থাকতে পারে, যেমন:</p>
+        <ul style="padding-left: 20px; margin-bottom: 10px; line-height: 1.8;">
+            <li>• Payment Services</li>
+            <li>• Courier Services</li>
+            <li>• WhatsApp</li>
+            <li>• অন্যান্য প্রয়োজনীয় তৃতীয় পক্ষের সেবা</li>
+        </ul>
+        <p style="margin-bottom: 15px;">এই তৃতীয় পক্ষের নিজস্ব Privacy Policy ও Terms থাকতে পারে। তাদের ওয়েবসাইট বা সেবা ব্যবহারের ক্ষেত্রে তাদের নিজস্ব নীতিমালা প্রযোজ্য হবে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">৮. আপনার তথ্য বিক্রি করা হবে না</h3>
+        <p style="margin-bottom: 15px;">আমরা আপনার ব্যক্তিগত তথ্য বিক্রি, ভাড়া বা বাণিজ্যিকভাবে অন্য প্রতিষ্ঠানের কাছে বিক্রি করার উদ্দেশ্যে ব্যবহার করি না। তবে আইনগত প্রয়োজন, অর্ডার ডেলিভারি, পেমেন্ট যাচাই অথবা প্রয়োজনীয় ব্যবসায়িক সেবা প্রদানের ক্ষেত্রে সংশ্লিষ্ট পক্ষের সঙ্গে প্রয়োজনীয় তথ্য শেয়ার করা হতে পারে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">৯. তথ্য সংরক্ষণ</h3>
+        <p style="margin-bottom: 15px;">অর্ডার, যোগাযোগ ও ব্যবসায়িক প্রয়োজন অনুযায়ী কিছু তথ্য নির্দিষ্ট সময় পর্যন্ত সংরক্ষণ করা হতে পারে। যে তথ্য আর প্রয়োজন নেই, তা যুক্তিসঙ্গতভাবে মুছে ফেলা বা সংরক্ষণ না করার ব্যবস্থা নেওয়া হতে পারে, যদি আইনগত বা ব্যবসায়িক কোনো বৈধ কারণে তা সংরক্ষণ করা প্রয়োজন না হয়।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১০. শিশুদের গোপনীয়তা</h3>
+        <p style="margin-bottom: 15px;">আমাদের ওয়েবসাইট মূলত সাধারণ গ্রাহকদের জন্য তৈরি। অপ্রাপ্তবয়স্ক শিশুদের কাছ থেকে জেনে-শুনে ব্যক্তিগত তথ্য সংগ্রহ করার উদ্দেশ্যে আমাদের সেবা পরিচালিত হয় না।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১১. তৃতীয় পক্ষের ওয়েবসাইট</h3>
+        <p style="margin-bottom: 10px;">আমাদের ওয়েবসাইটে থাকা কোনো তৃতীয় পক্ষের লিংকে ক্লিক করলে আপনি অন্য ওয়েবসাইটে চলে যেতে পারেন।</p>
+        <p style="margin-bottom: 15px;">সেই ওয়েবসাইটের Privacy Policy, Security বা Content-এর জন্য <strong>Burqa Bazaar and Boutiques</strong> দায়ী নয়। কোনো তৃতীয় পক্ষের ওয়েবসাইট ব্যবহার করার আগে তাদের Privacy Policy পড়ে নেওয়ার পরামর্শ দেওয়া হচ্ছে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১২. আপনার অধিকার</h3>
+        <p style="margin-bottom: 15px;">আপনার ব্যক্তিগত তথ্য সম্পর্কে কোনো প্রশ্ন, সংশোধনের অনুরোধ বা গোপনীয়তা সংক্রান্ত উদ্বেগ থাকলে আমাদের সঙ্গে যোগাযোগ করতে পারেন। আপনার অনুরোধের প্রকৃতি ও প্রযোজ্য আইন অনুযায়ী আমরা প্রয়োজনীয় ব্যবস্থা নেওয়ার চেষ্টা করব।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১৩. Privacy Policy পরিবর্তন</h3>
+        <p style="margin-bottom: 15px;">প্রয়োজন অনুযায়ী আমরা এই Privacy Policy পরিবর্তন বা আপডেট করতে পারি। পরিবর্তন করা হলে এই পৃষ্ঠায় নতুন "সর্বশেষ আপডেট" তারিখ দেওয়া হতে পারে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১৪. আমাদের সঙ্গে যোগাযোগ</h3>
+        <p style="margin-bottom: 10px;">Privacy Policy, ব্যক্তিগত তথ্য বা গোপনীয়তা সংক্রান্ত কোনো প্রশ্ন থাকলে আমাদের সঙ্গে যোগাযোগ করুন:</p>
+        
+        <div class="premium-contact-grid">
+            <div class="premium-contact-card">
+                <img src="https://i.ibb.co/vWtCxwz/images-3.png" alt="Phone" class="premium-contact-icon-img">
+                <div class="premium-contact-info">
+                    <span class="premium-contact-label">PHONE</span>
+                    <a href="tel:+8801832140613" class="premium-contact-value">+880 1832-140613</a>
+                </div>
+            </div>
+            <div class="premium-contact-card">
+                <img src="https://i.ibb.co/twXQ8zyW/images-4.png" alt="WhatsApp" class="premium-contact-icon-img">
+                <div class="premium-contact-info">
+                    <span class="premium-contact-label">WHATSAPP</span>
+                    <a href="https://wa.me/8801832140613" target="_blank" class="premium-contact-value">+880 1832-140613</a>
+                </div>
+            </div>
+            <div class="premium-contact-card">
+                <img src="https://i.ibb.co/tPxNN9j2/images-5.png" alt="Email" class="premium-contact-icon-img">
+                <div class="premium-contact-info">
+                    <span class="premium-contact-label">EMAIL</span>
+                    <a href="mailto:burqabazaarabdboutiques@gmail.com" class="premium-contact-value" style="word-break: break-all; font-size: 12px;">burqabazaarabdboutiques@gmail.com</a>
+                </div>
+            </div>
+            <div class="premium-contact-card">
+                <img src="https://i.ibb.co/HDZcK1v1/8210.png" alt="Address" class="premium-contact-icon-img">
+                <div class="premium-contact-info">
+                    <span class="premium-contact-label">ADDRESS</span>
+                    <span class="premium-contact-value" style="font-size: 12px;">ফেনী সওদাগর পট্টি, সওদাগর টাওয়ার, ২য় তলা, দোকান নং ০৩</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="policy-footer">
+            <p style="font-weight: bold; color: var(--gold-color); font-size: 16px; margin-bottom: 10px;">Burqa Bazaar and Boutiques</p>
+            <p style="font-weight: 600; font-size: 14px;">Modesty in Every Look.<br>Elegance in Every Detail.</p>
+        </div>
+    </div>
+</div>
+      <!-- TERMS & CONDITIONS PAGE SECTION -->
+<div id="terms-section" class="page-section">
+    <div class="page-content-box">
+        <h2 style="text-align: center; margin-bottom: 25px;">📜 Terms & Conditions | শর্তাবলি</h2>
+
+        <p style="margin-bottom: 15px;"><strong>Burqa Bazaar and Boutiques</strong> ওয়েবসাইটে আপনাকে স্বাগতম। আমাদের ওয়েবসাইট ব্যবহার, পণ্য দেখা, অর্ডার করা বা আমাদের সেবা গ্রহণ করার মাধ্যমে আপনি নিচের Terms & Conditions মেনে চলতে সম্মত হচ্ছেন। অনুগ্রহ করে অর্ডার করার আগে এই শর্তাবলিগুলো মনোযোগ দিয়ে পড়ে নিন।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১. সাধারণ শর্তাবলি</h3>
+        <p style="margin-bottom: 10px;">এই ওয়েবসাইটের পণ্য, ছবি, বিবরণ, মূল্য, অফার ও অন্যান্য তথ্য প্রয়োজন অনুযায়ী পরিবর্তন, সংশোধন বা আপডেট করার অধিকার <strong>Burqa Bazaar and Boutiques</strong> সংরক্ষণ করে।</p>
+        <p style="margin-bottom: 15px;">ওয়েবসাইট ব্যবহার করার সময় কোনো বেআইনি, প্রতারণামূলক বা ক্ষতিকর কার্যক্রম করা যাবে না।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">২. পণ্যের তথ্য ও ছবি</h3>
+        <p style="margin-bottom: 10px;">আমরা পণ্যের ছবি ও বিবরণ যথাসম্ভব সঠিকভাবে উপস্থাপন করার চেষ্টা করি।</p>
+        <p style="margin-bottom: 10px;">তবে বিভিন্ন মোবাইল, কম্পিউটার বা স্ক্রিনের Brightness, Display ও Color Settings-এর কারণে ছবির রঙ এবং বাস্তবে পাওয়া পণ্যের রঙের মধ্যে সামান্য পার্থক্য হতে পারে।</p>
+        <p style="margin-bottom: 15px;">পণ্যের ডিজাইন, কাপড়, রঙ বা অন্যান্য বৈশিষ্ট্যে প্রয়োজন অনুযায়ী পরিবর্তন হতে পারে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">৩. পণ্যের মূল্য</h3>
+        <p style="margin-bottom: 10px;">ওয়েবসাইটে প্রদর্শিত পণ্যের মূল্য সময়ের সঙ্গে পরিবর্তিত হতে পারে।</p>
+        <p style="margin-bottom: 15px;">কোনো ভুল মূল্য, তথ্য বা প্রযুক্তিগত সমস্যার কারণে অস্বাভাবিক মূল্য প্রদর্শিত হলে অর্ডার নিশ্চিত করার আগে তা সংশোধন বা বাতিল করার অধিকার আমাদের রয়েছে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">৪. অর্ডার করার নিয়ম</h3>
+        <p style="margin-bottom: 10px;">অর্ডার করার সময় গ্রাহককে সঠিক তথ্য প্রদান করতে হবে। বিশেষ করে:</p>
+        <ul style="padding-left: 20px; margin-bottom: 10px; line-height: 1.8;">
+            <li>• সঠিক নাম</li>
+            <li>• সচল মোবাইল নম্বর</li>
+            <li>• সঠিক জেলা ও থানা</li>
+            <li>• সম্পূর্ণ ডেলিভারি ঠিকানা</li>
+            <li>• প্রয়োজনীয় অন্যান্য তথ্য</li>
+        </ul>
+        <p style="margin-bottom: 15px;">ভুল বা অসম্পূর্ণ তথ্যের কারণে ডেলিভারি ব্যর্থ হলে অতিরিক্ত ডেলিভারি চার্জ বা অন্যান্য খরচ গ্রাহকের ওপর প্রযোজ্য হতে পারে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">৫. অর্ডার নিশ্চিতকরণ</h3>
+        <p style="margin-bottom: 10px;">অর্ডার করা মানেই অর্ডার চূড়ান্তভাবে নিশ্চিত হয়েছে—এমন নয়।</p>
+        <p style="margin-bottom: 10px;">প্রয়োজনে আমাদের প্রতিনিধি ফোন, WhatsApp বা অন্য কোনো মাধ্যমে অর্ডার যাচাই বা নিশ্চিত করতে পারেন।</p>
+        <p style="margin-bottom: 15px;">পণ্য স্টক না থাকা, তথ্যগত ভুল, ডেলিভারি সমস্যা বা অন্য কোনো যুক্তিসঙ্গত কারণে অর্ডার গ্রহণ বা বাতিল করার প্রয়োজন হতে পারে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">৬. পেমেন্ট</h3>
+        <p style="margin-bottom: 10px;">আমাদের ওয়েবসাইটে প্রয়োজন অনুযায়ী নিম্নলিখিত পেমেন্ট পদ্ধতি থাকতে পারে:</p>
+        <ul style="padding-left: 20px; margin-bottom: 10px; line-height: 1.8;">
+            <li>• Cash on Delivery (COD)</li>
+            <li>• bKash</li>
+            <li>• Nagad</li>
+        </ul>
+        <p style="margin-bottom: 10px;">bKash বা Nagad-এর মাধ্যমে পেমেন্ট করলে সঠিক নম্বর ও Transaction ID প্রদান করতে হতে পারে।</p>
+        <p style="margin-bottom: 15px; color: #d9534f; font-weight: bold;">কখনোই আপনার bKash/Nagad PIN, OTP, Password বা Security Code আমাদের কাছে পাঠাবেন না।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">৭. COD অর্ডার</h3>
+        <p style="margin-bottom: 15px;">Cash on Delivery নির্বাচন করলেও নির্দিষ্ট ক্ষেত্রে ডেলিভারি চার্জ অগ্রিম পরিশোধ করতে হতে পারে। অর্ডার নিশ্চিত করার সময় যদি অগ্রিম ডেলিভারি চার্জ প্রয়োজন হয়, তাহলে আমাদের পক্ষ থেকে তা জানানো হবে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">৮. ডেলিভারি</h3>
+        <p style="margin-bottom: 10px;">ডেলিভারি সময় কুরিয়ার সার্ভিস, অবস্থান, আবহাওয়া, ছুটির দিন, প্রাকৃতিক দুর্যোগ, পরিবহন সমস্যা এবং অন্যান্য পরিস্থিতির ওপর নির্ভর করতে পারে। তাই প্রদত্ত ডেলিভারি সময় আনুমানিক সময় হিসেবে বিবেচনা করতে হবে।</p>
+        <p style="margin-bottom: 15px;">কুরিয়ার কোম্পানির কারণে কোনো বিলম্ব হলে পরিস্থিতি অনুযায়ী আমরা সহযোগিতা করার চেষ্টা করব।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">৯. ডেলিভারি চার্জ</h3>
+        <p style="margin-bottom: 10px;">ডেলিভারি চার্জ আপনার এলাকার ওপর নির্ভর করতে পারে। বর্তমান ওয়েবসাইটের তথ্য অনুযায়ী:</p>
+        <ul style="padding-left: 20px; margin-bottom: 10px; line-height: 1.8;">
+            <li>• <strong>Inside Feni:</strong> ৳60</li>
+            <li>• <strong>Outside Feni:</strong> ৳130</li>
+        </ul>
+        <p style="margin-bottom: 15px;">ডেলিভারি চার্জ পরিবর্তিত হতে পারে এবং অর্ডারের সময় প্রযোজ্য চার্জই চূড়ান্ত হিসেবে বিবেচিত হবে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১০. পণ্য গ্রহণের সময়</h3>
+        <p style="margin-bottom: 15px;">পণ্য হাতে পাওয়ার পর প্যাকেট ও পণ্য ভালোভাবে পরীক্ষা করার পরামর্শ দেওয়া হচ্ছে। ভুল, ক্ষতিগ্রস্ত বা ত্রুটিপূর্ণ পণ্য পাওয়া গেলে যত দ্রুত সম্ভব আমাদের সঙ্গে যোগাযোগ করতে হবে। প্রয়োজনে Unboxing Video বা ছবি প্রমাণ হিসেবে চাওয়া হতে পারে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১১. Return & Exchange</h3>
+        <p style="margin-bottom: 15px;">Return ও Exchange-এর ক্ষেত্রে আমাদের আলাদা <strong>Return & Exchange Policy</strong> প্রযোজ্য হবে। সাধারণভাবে ব্যবহৃত, ধোয়া, পরিবর্তন করা বা ক্ষতিগ্রস্ত পণ্য রিটার্ন/এক্সচেঞ্জের আওতায় নাও আসতে পারে। Return বা Exchange করার আগে আমাদের Customer Support-এর সঙ্গে যোগাযোগ করতে হবে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১২. অর্ডার বাতিল</h3>
+        <p style="margin-bottom: 15px;">পণ্য পাঠানোর আগে অর্ডার বাতিলের অনুরোধ গ্রহণ করা যেতে পারে। তবে পণ্য ইতোমধ্যে Courier-এর কাছে পাঠানো হয়ে গেলে অর্ডার বাতিল করা সম্ভব নাও হতে পারে। অর্ডার বাতিলের ক্ষেত্রে প্রযোজ্য কুরিয়ার বা অন্যান্য খরচ গ্রাহকের ওপর বর্তাতে পারে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১৩. গ্রাহকের দায়িত্ব</h3>
+        <p style="margin-bottom: 10px;">অর্ডার করার সময় সঠিক তথ্য প্রদান করা গ্রাহকের দায়িত্ব। গ্রাহকের ভুল তথ্যের কারণে:</p>
+        <ul style="padding-left: 20px; margin-bottom: 10px; line-height: 1.8;">
+            <li>• ডেলিভারি ব্যর্থ হওয়া</li>
+            <li>• পার্সেল ফেরত যাওয়া</li>
+            <li>• অতিরিক্ত কুরিয়ার চার্জ</li>
+            <li>• পুনরায় ডেলিভারি প্রয়োজন হওয়া</li>
+        </ul>
+        <p style="margin-bottom: 15px;">ইত্যাদি ঘটলে সংশ্লিষ্ট অতিরিক্ত খরচ গ্রাহকের ওপর প্রযোজ্য হতে পারে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১৪. পণ্যের ব্যবহার</h3>
+        <p style="margin-bottom: 15px;">পণ্য পাওয়ার পর সেটি ব্যবহারের আগে সঠিকভাবে পরীক্ষা করে নেওয়ার পরামর্শ দেওয়া হচ্ছে। ব্যবহার, ধোয়া, পরিবর্তন, কাটাছেঁড়া বা অন্য কোনোভাবে Alter করার পর পণ্য Return বা Exchange-এর ক্ষেত্রে গ্রহণযোগ্য নাও হতে পারে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১৫. Website Content ও Copyright</h3>
+        <p style="margin-bottom: 15px;">এই ওয়েবসাইটের Logo, Brand Name, Product Images, Graphics, Text, Design এবং অন্যান্য Original Content <strong>Burqa Bazaar and Boutiques</strong>-এর সম্পত্তি বা অনুমোদিত ব্যবহারের অধীন হতে পারে। অনুমতি ছাড়া এগুলো কপি, পুনঃব্যবহার, পরিবর্তন, বিক্রি বা বাণিজ্যিকভাবে ব্যবহার করা যাবে না।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১৬. Third-Party Services</h3>
+        <p style="margin-bottom: 15px;">আমাদের ওয়েবসাইটে WhatsApp, Payment Service, Courier Service বা অন্যান্য Third-Party Service-এর লিংক থাকতে পারে। এসব তৃতীয় পক্ষের নিজস্ব Terms & Conditions ও Privacy Policy থাকতে পারে। তাদের সেবা ব্যবহারের ক্ষেত্রে সংশ্লিষ্ট প্রতিষ্ঠানের নিজস্ব শর্তাবলি প্রযোজ্য হবে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১৭. Website Availability</h3>
+        <p style="margin-bottom: 15px;">আমরা ওয়েবসাইটটি সচল ও ব্যবহারযোগ্য রাখার চেষ্টা করি। তবে Maintenance, Technical Problem, Server Issue, Internet সমস্যা বা অন্যান্য কারণে ওয়েবসাইট সাময়িকভাবে বন্ধ বা সীমিত হতে পারে। এ ধরনের পরিস্থিতির জন্য আমরা যথাসম্ভব দ্রুত সমস্যা সমাধানের চেষ্টা করব।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১৮. প্রতারণা ও অপব্যবহার</h3>
+        <p style="margin-bottom: 15px;">ভুয়া অর্ডার, মিথ্যা তথ্য, ইচ্ছাকৃতভাবে কুরিয়ার পার্সেল গ্রহণ না করা, প্রতারণামূলক পেমেন্ট তথ্য প্রদান বা ওয়েবসাইটের অপব্যবহার গ্রহণযোগ্য নয়। প্রয়োজনে সন্দেহজনক অর্ডার যাচাই, স্থগিত বা বাতিল করা হতে পারে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১৯. Privacy Policy</h3>
+        <p style="margin-bottom: 15px;">আপনার ব্যক্তিগত তথ্য কীভাবে সংগ্রহ ও ব্যবহার করা হয় সে সম্পর্কে বিস্তারিত জানতে আমাদের <strong>Privacy Policy</strong> দেখুন। ওয়েবসাইট ব্যবহার ও অর্ডার করার ক্ষেত্রে আমাদের Privacy Policy-ও প্রযোজ্য হবে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">২০. Terms & Conditions পরিবর্তন</h3>
+        <p style="margin-bottom: 15px;">প্রয়োজন অনুযায়ী আমরা এই Terms & Conditions পরিবর্তন, সংশোধন বা আপডেট করতে পারি। পরিবর্তন করা হলে এই পৃষ্ঠায় নতুন "সর্বশেষ আপডেট" তারিখ উল্লেখ করা হতে পারে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">২১. যোগাযোগ</h3>
+        <p style="margin-bottom: 10px;">Terms & Conditions সম্পর্কে কোনো প্রশ্ন, সমস্যা বা অভিযোগ থাকলে আমাদের সঙ্গে যোগাযোগ করুন:</p>
+
+        <div class="premium-contact-grid">
+            <div class="premium-contact-card">
+                <img src="https://i.ibb.co/vWtCxwz/images-3.png" alt="Phone" class="premium-contact-icon-img">
+                <div class="premium-contact-info">
+                    <span class="premium-contact-label">PHONE</span>
+                    <a href="tel:+8801832140613" class="premium-contact-value">+880 1832-140613</a>
+                </div>
+            </div>
+            <div class="premium-contact-card">
+                <img src="https://i.ibb.co/twXQ8zyW/images-4.png" alt="WhatsApp" class="premium-contact-icon-img">
+                <div class="premium-contact-info">
+                    <span class="premium-contact-label">WHATSAPP</span>
+                    <a href="https://wa.me/8801832140613" target="_blank" class="premium-contact-value">+880 1832-140613</a>
+                </div>
+            </div>
+            <div class="premium-contact-card">
+                <img src="https://i.ibb.co/tPxNN9j2/images-5.png" alt="Email" class="premium-contact-icon-img">
+                <div class="premium-contact-info">
+                    <span class="premium-contact-label">EMAIL</span>
+                    <a href="mailto:burqabazaarabdboutiques@gmail.com" class="premium-contact-value" style="word-break: break-all; font-size: 12px;">burqabazaarabdboutiques@gmail.com</a>
+                </div>
+            </div>
+            <div class="premium-contact-card">
+                <img src="https://i.ibb.co/HDZcK1v1/8210.png" alt="Address" class="premium-contact-icon-img">
+                <div class="premium-contact-info">
+                    <span class="premium-contact-label">ADDRESS</span>
+                    <span class="premium-contact-value" style="font-size: 12px;">ফেনী সওদাগর পট্টি, সওদাগর টাওয়ার, ২য় তলা, দোকান নং ০৩</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="policy-footer">
+            <p style="font-weight: bold; color: var(--gold-color); font-size: 16px; margin-bottom: 10px;">Burqa Bazaar and Boutiques</p>
+            <p style="font-weight: 600; font-size: 14px;">Modesty in Every Look.<br>Elegance in Every Detail.</p>
+        </div>
+    </div>
+</div>
+<!-- RETURN POLICY PAGE SECTION -->
+<div id="return-policy-section" class="page-section">
+    <div class="page-content-box">
+        <h2 style="text-align: center; margin-bottom: 25px;">🔄 Return & Exchange Policy | রিটার্ন ও এক্সচেঞ্জ নীতিমালা</h2>
+
+        <p style="margin-bottom: 15px;"><strong>Burqa Bazaar and Boutiques</strong>-এ আমরা চেষ্টা করি প্রতিটি গ্রাহকের কাছে সঠিক ও মানসম্মত পণ্য পৌঁছে দিতে। তবে কোনো কারণে পণ্যে সমস্যা হলে নিচের নীতিমালা অনুযায়ী Return বা Exchange-এর জন্য আমাদের সঙ্গে যোগাযোগ করতে পারবেন।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১. Return / Exchange করার সময়সীমা</h3>
+        <p style="margin-bottom: 15px;">পণ্য হাতে পাওয়ার <strong>৪৮ ঘণ্টার মধ্যে</strong> Return বা Exchange-এর জন্য আমাদের সঙ্গে যোগাযোগ করতে হবে। ৪৮ ঘণ্টা পার হয়ে গেলে সাধারণত Return বা Exchange-এর অনুরোধ গ্রহণ করা হবে না।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">২. কোন ক্ষেত্রে Exchange করা যাবে?</h3>
+        <p style="margin-bottom: 10px;">নিচের সমস্যাগুলোর ক্ষেত্রে Exchange-এর জন্য যোগাযোগ করতে পারবেন:</p>
+        <ul style="padding-left: 20px; margin-bottom: 10px; line-height: 1.8;">
+            <li>• ভুল পণ্য পাঠানো হলে</li>
+            <li>• অর্ডার করা রঙের পরিবর্তে অন্য রঙ পাঠানো হলে</li>
+            <li>• ভুল Size পাঠানো হলে</li>
+            <li>• ডেলিভারির সময় পণ্য ক্ষতিগ্রস্ত হলে</li>
+            <li>• Manufacturing Defect থাকলে</li>
+            <li>• পণ্যের বিবরণের সঙ্গে উল্লেখযোগ্য পার্থক্য থাকলে</li>
+        </ul>
+        <p style="margin-bottom: 15px;">Exchange-এর আগে আমাদের Customer Support-এর সঙ্গে যোগাযোগ করা বাধ্যতামূলক।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">৩. Size Exchange</h3>
+        <p style="margin-bottom: 10px;">ভুল Size নির্বাচন করার ক্ষেত্রে Size Exchange সবসময় প্রযোজ্য নাও হতে পারে। Size Exchange-এর জন্য:</p>
+        <ul style="padding-left: 20px; margin-bottom: 10px; line-height: 1.8;">
+            <li>• পণ্য অবশ্যই Unused হতে হবে</li>
+            <li>• পণ্য ধোয়া যাবে না</li>
+            <li>• কোনো ধরনের পরিবর্তন বা Alter করা যাবে না</li>
+            <li>• Original Packaging ও Tags অক্ষত থাকতে হবে</li>
+            <li>• নির্ধারিত সময়ের মধ্যে যোগাযোগ করতে হবে</li>
+        </ul>
+        <p style="margin-bottom: 15px;">Size পরিবর্তনের কারণে কুরিয়ার বা অতিরিক্ত ডেলিভারি খরচ প্রযোজ্য হলে তা গ্রাহককে বহন করতে হতে পারে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">৪. কোন ক্ষেত্রে Return / Exchange গ্রহণযোগ্য নয়?</h3>
+        <p style="margin-bottom: 10px;">নিচের ক্ষেত্রে Return বা Exchange গ্রহণ করা হবে না:</p>
+        <ul style="padding-left: 20px; margin-bottom: 15px; line-height: 1.8; color: #d9534f;">
+            <li>❌ পণ্য ব্যবহার করা হলে</li>
+            <li>❌ পণ্য ধোয়া হলে</li>
+            <li>❌ পণ্যের Tag বা Label খুলে ফেললে</li>
+            <li>❌ পণ্যে Alteration বা পরিবর্তন করা হলে</li>
+            <li>❌ ইচ্ছাকৃতভাবে পণ্য ক্ষতিগ্রস্ত করা হলে</li>
+            <li>❌ Original Packaging নষ্ট বা হারিয়ে গেলে</li>
+            <li>❌ ৪৮ ঘণ্টার পর যোগাযোগ করলে</li>
+            <li>❌ শুধুমাত্র পছন্দ পরিবর্তনের কারণে</li>
+            <li>❌ ছবির সঙ্গে সামান্য Color Difference থাকলে</li>
+        </ul>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">৫. Color Difference</h3>
+        <p style="margin-bottom: 15px;">মোবাইল, কম্পিউটার বা বিভিন্ন স্ক্রিনের Display Settings-এর কারণে ছবিতে দেখা রঙের সঙ্গে বাস্তব পণ্যের রঙে সামান্য পার্থক্য থাকতে পারে। এই ধরনের সামান্য রঙের পার্থক্য সাধারণত Return বা Exchange-এর কারণ হিসেবে বিবেচিত হবে না।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">৬. Wrong / Damaged Product</h3>
+        <p style="margin-bottom: 10px;">ভুল বা ক্ষতিগ্রস্ত পণ্য পেলে পণ্য ব্যবহার না করে দ্রুত আমাদের সঙ্গে যোগাযোগ করুন। প্রয়োজনে নিচের তথ্যগুলো দিতে হতে পারে:</p>
+        <ul style="padding-left: 20px; margin-bottom: 10px; line-height: 1.8;">
+            <li>• অর্ডার নম্বর</li>
+            <li>• পণ্যের ছবি</li>
+            <li>• প্যাকেটের ছবি</li>
+            <li>• ক্ষতিগ্রস্ত অংশের পরিষ্কার ছবি</li>
+            <li>• Unboxing Video</li>
+        </ul>
+        <p style="margin-bottom: 15px;">Unboxing Video থাকলে পণ্যের সমস্যা যাচাই করতে আমাদের জন্য সহজ হয়।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">৭. Return / Exchange-এর আগে যোগাযোগ</h3>
+        <p style="margin-bottom: 15px;">আমাদের অনুমতি ছাড়া কোনো পণ্য সরাসরি কুরিয়ারে ফেরত পাঠাবেন না। প্রথমে আমাদের Customer Support-এর সঙ্গে যোগাযোগ করুন এবং Return/Exchange-এর নির্দেশনা গ্রহণ করুন। অনুমোদন ছাড়া পাঠানো পণ্যের Return বা Exchange নিশ্চিত করা যাবে না।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">৮. Return Shipping Cost</h3>
+        <p style="margin-bottom: 15px;">ভুল পণ্য পাঠানো, ডেলিভারির সময় ক্ষতি বা আমাদের পক্ষের কোনো ত্রুটির ক্ষেত্রে Return/Exchange-এর কুরিয়ার খরচ পরিস্থিতি অনুযায়ী আমরা বহন করতে পারি। তবে Size পরিবর্তন, ভুল Size নির্বাচন বা ব্যক্তিগত পছন্দের কারণে Exchange-এর ক্ষেত্রে কুরিয়ার খরচ গ্রাহকের ওপর প্রযোজ্য হতে পারে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">৯. Refund</h3>
+        <p style="margin-bottom: 15px;">কোনো পণ্য Exchange করা সম্ভব না হলে পরিস্থিতি অনুযায়ী Refund-এর ব্যবস্থা করা হতে পারে। Refund-এর পদ্ধতি ও সময় পেমেন্ট পদ্ধতি এবং সংশ্লিষ্ট পরিস্থিতির ওপর নির্ভর করবে। ডেলিভারি বা কুরিয়ার চার্জ সাধারণত Refund-এর আওতায় নাও থাকতে পারে, যদি না সমস্যাটি আমাদের পক্ষ থেকে হয়ে থাকে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১০. Hygiene & Personal-Use Products</h3>
+        <p style="margin-bottom: 15px;">হিজাব, বোরকা, আবায়া বা অন্যান্য ব্যক্তিগত ব্যবহারের পোশাকের ক্ষেত্রে স্বাস্থ্যবিধি ও পণ্যের অবস্থার বিষয়টি গুরুত্বপূর্ণ। ব্যবহৃত, ধোয়া বা পরিধান করা পণ্য Return/Exchange-এর জন্য গ্রহণযোগ্য নাও হতে পারে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১১. Discount / Promotional Products</h3>
+        <p style="margin-bottom: 15px;">Discount, Clearance বা Promotional Offer-এর অধীনে বিক্রি করা পণ্যের জন্য আলাদা Return/Exchange শর্ত প্রযোজ্য হতে পারে। অর্ডার করার আগে সংশ্লিষ্ট অফারের শর্ত দেখে নেওয়ার পরামর্শ দেওয়া হচ্ছে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১২. Return / Exchange করার ধাপ</h3>
+        <ul style="padding-left: 20px; margin-bottom: 15px; line-height: 1.8;">
+            <li><strong>Step 1:</strong> পণ্য পাওয়ার ৪৮ ঘণ্টার মধ্যে আমাদের সঙ্গে যোগাযোগ করুন।</li>
+            <li><strong>Step 2:</strong> অর্ডার নম্বর ও সমস্যার বিস্তারিত জানান।</li>
+            <li><strong>Step 3:</strong> প্রয়োজন হলে ছবি বা Unboxing Video পাঠান।</li>
+            <li><strong>Step 4:</strong> আমাদের পক্ষ থেকে যাচাই করা হবে।</li>
+            <li><strong>Step 5:</strong> Return/Exchange অনুমোদিত হলে প্রয়োজনীয় নির্দেশনা দেওয়া হবে।</li>
+            <li><strong>Step 6:</strong> নির্দেশনা অনুযায়ী পণ্য ফেরত পাঠান।</li>
+            <li><strong>Step 7:</strong> পণ্য যাচাইয়ের পর Exchange বা প্রযোজ্য ক্ষেত্রে Refund সম্পন্ন করা হবে।</li>
+        </ul>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১৩. Customer Responsibility</h3>
+        <p style="margin-bottom: 15px;">Return বা Exchange-এর জন্য পাঠানো পণ্য নিরাপদভাবে প্যাক করা গ্রাহকের দায়িত্ব। ফেরত পাঠানোর সময় পণ্য যেন নতুন বা গ্রহণের সময়কার অবস্থার মতো থাকে, সেদিকে খেয়াল রাখতে হবে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১৪. Policy পরিবর্তন</h3>
+        <p style="margin-bottom: 15px;">প্রয়োজন অনুযায়ী আমরা এই Return & Exchange Policy পরিবর্তন বা আপডেট করতে পারি। পরিবর্তন করা হলে এই পৃষ্ঠায় নতুন "সর্বশেষ আপডেট" তারিখ উল্লেখ করা হবে।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px;">১৫. যোগাযোগ</h3>
+        <p style="margin-bottom: 10px;">Return বা Exchange সংক্রান্ত যেকোনো প্রয়োজনে আমাদের সঙ্গে যোগাযোগ করুন:</p>
+
+        <div class="premium-contact-grid">
+            <div class="premium-contact-card">
+                <img src="https://i.ibb.co/vWtCxwz/images-3.png" alt="Phone" class="premium-contact-icon-img">
+                <div class="premium-contact-info">
+                    <span class="premium-contact-label">PHONE</span>
+                    <a href="tel:+8801832140613" class="premium-contact-value">+880 1832-140613</a>
+                </div>
+            </div>
+            <div class="premium-contact-card">
+                <img src="https://i.ibb.co/twXQ8zyW/images-4.png" alt="WhatsApp" class="premium-contact-icon-img">
+                <div class="premium-contact-info">
+                    <span class="premium-contact-label">WHATSAPP</span>
+                    <a href="https://wa.me/8801832140613" target="_blank" class="premium-contact-value">+880 1832-140613</a>
+                </div>
+            </div>
+            <div class="premium-contact-card">
+                <img src="https://i.ibb.co/tPxNN9j2/images-5.png" alt="Email" class="premium-contact-icon-img">
+                <div class="premium-contact-info">
+                    <span class="premium-contact-label">EMAIL</span>
+                    <a href="mailto:burqabazaarabdboutiques@gmail.com" class="premium-contact-value" style="word-break: break-all; font-size: 12px;">burqabazaarabdboutiques@gmail.com</a>
+                </div>
+            </div>
+            <div class="premium-contact-card">
+                <img src="https://i.ibb.co/HDZcK1v1/8210.png" alt="Address" class="premium-contact-icon-img">
+                <div class="premium-contact-info">
+                    <span class="premium-contact-label">ADDRESS</span>
+                    <span class="premium-contact-value" style="font-size: 12px;">ফেনী সওদাগর পট্টি, সওদাগর টাওয়ার, ২য় তলা, দোকান নং ০৩</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="policy-footer">
+            <p style="font-weight: bold; color: var(--gold-color); font-size: 16px; margin-bottom: 10px;">Burqa Bazaar and Boutiques</p>
+            <p style="font-weight: 600; font-size: 14px;">Modesty in Every Look.<br>Elegance in Every Detail.</p>
+        </div>
+    </div>
+</div>
+<!-- CONTACT US PAGE SECTION -->
+<div id="contact-section" class="page-section">
+    <div class="page-content-box">
+        <h2 style="text-align: center; margin-bottom: 25px;">📞 Contact Us | যোগাযোগ করুন</h2>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px; text-align: center;">💕 আমাদের সঙ্গে যোগাযোগ করতে স্বাগতম</h3>
+        <p style="margin-bottom: 15px; text-align: center;">আপনার পছন্দের <strong>Hijab, Burqa ও Abaya</strong> সম্পর্কে জানতে, অর্ডার করতে, সাইজ বা কালার সম্পর্কে তথ্য নিতে কিংবা যেকোনো সহযোগিতার জন্য আমাদের সঙ্গে যোগাযোগ করুন। আমরা আপনাকে প্রয়োজনীয় তথ্য ও সহযোগিতা দেওয়ার জন্য সর্বোচ্চ চেষ্টা করি।</p>
+
+        <div class="premium-contact-grid" style="margin-bottom: 25px;">
+            <div class="premium-contact-card">
+                <img src="https://i.ibb.co/vWtCxwz/images-3.png" alt="Phone" class="premium-contact-icon-img">
+                <div class="premium-contact-info">
+                    <span class="premium-contact-label">PHONE</span>
+                    <a href="tel:+8801832140613" class="premium-contact-value">+880 1832-140613</a>
+                </div>
+            </div>
+            <div class="premium-contact-card">
+                <img src="https://i.ibb.co/twXQ8zyW/images-4.png" alt="WhatsApp" class="premium-contact-icon-img">
+                <div class="premium-contact-info">
+                    <span class="premium-contact-label">WHATSAPP</span>
+                    <a href="https://wa.me/8801832140613" target="_blank" class="premium-contact-value">+880 1832-140613</a>
+                </div>
+            </div>
+            <div class="premium-contact-card">
+                <img src="https://i.ibb.co/tPxNN9j2/images-5.png" alt="Email" class="premium-contact-icon-img">
+                <div class="premium-contact-info">
+                    <span class="premium-contact-label">EMAIL</span>
+                    <a href="mailto:burqabazaarabdboutiques@gmail.com" class="premium-contact-value" style="word-break: break-all; font-size: 12px;">burqabazaarabdboutiques@gmail.com</a>
+                </div>
+            </div>
+            <div class="premium-contact-card">
+                <img src="https://i.ibb.co/HDZcK1v1/8210.png" alt="Address" class="premium-contact-icon-img">
+                <div class="premium-contact-info">
+                    <span class="premium-contact-label">ADDRESS</span>
+                    <span class="premium-contact-value" style="font-size: 12px;">ফেনী সওদাগর পট্টি, সওদাগর টাওয়ার, ২য় তলা, দোকান নং ০৩</span>
+                </div>
+            </div>
+        </div>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 25px; margin-bottom: 15px;">🛍️ আমাদের কাছে যেসব বিষয়ে যোগাযোগ করতে পারেন</h3>
+        <ul style="padding-left: 20px; margin-bottom: 25px; line-height: 1.8;">
+            <li>• 🛒 পণ্য ও অর্ডার সংক্রান্ত তথ্য</li>
+            <li>• 🎨 কালার ও ডিজাইন সম্পর্কে জানতে</li>
+            <li>• 📏 সাইজ সংক্রান্ত তথ্য</li>
+            <li>• 🚚 ডেলিভারি সংক্রান্ত তথ্য</li>
+            <li>• 🔄 Return & Exchange</li>
+            <li>• 💳 Payment সংক্রান্ত তথ্য</li>
+            <li>• 📦 Order Tracking</li>
+            <li>• 💬 সাধারণ প্রশ্ন ও সহযোগিতা</li>
+            <li>• 🤝 ব্যবসায়িক যোগাযোগ</li>
+        </ul>
+
+        <div class="policy-footer">
+            <h3 style="color: var(--gold-color); font-size: 18px; margin-bottom: 10px; text-align: center; padding-left: 0;">🌸 আপনার সন্তুষ্টিই আমাদের অগ্রাধিকার</h3>
+            <p style="margin-bottom: 15px; font-size: 14px;">আপনার প্রশ্ন, মতামত ও পরামর্শ আমাদের জন্য গুরুত্বপূর্ণ। কোনো বিষয়ে সাহায্যের প্রয়োজন হলে নির্দ্বিধায় আমাদের সঙ্গে যোগাযোগ করুন।</p>
+            <p style="font-weight: bold; color: var(--gold-color); font-size: 16px; margin-bottom: 8px;">Burqa Bazaar and Boutiques</p>
+            <p style="font-weight: 600; font-size: 14px; line-height: 1.6;">প্রতিটি লুকে শালীনতা,<br>প্রতিটি ডিজাইনে সৌন্দর্য।</p>
+            <p style="font-style: italic; font-size: 13px; margin-top: 10px; color: var(--text-muted);">Modesty in Every Look.<br>Elegance in Every Detail.</p>
+        </div>
+    </div>
+</div>
+      <!-- TRACKING ORDER PAGE SECTION -->
+<div id="track-order-section" class="page-section">
+    <div class="page-content-box">
+        <h2 style="text-align: center; margin-bottom: 25px;">📦 Tracking Order | অর্ডার ট্র্যাক করুন</h2>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 20px; margin-bottom: 10px; text-align: center;">আপনার অর্ডারের বর্তমান অবস্থা জানুন</h3>
+        <p style="margin-bottom: 20px; text-align: center; line-height: 1.6;">আপনার অর্ডারটি কোন Courier-এর মাধ্যমে পাঠানো হয়েছে তা জেনে সেই Courier নির্বাচন করুন। এরপর আপনার <strong>Tracking Number / CN Number</strong> ব্যবহার করে পার্সেলের বর্তমান অবস্থান ও ডেলিভারি স্ট্যাটাস জানতে পারবেন।</p>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 25px; margin-bottom: 15px;">🚚 আপনার পার্সেল ট্র্যাক করুন</h3>
+        
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px;">
+            <div class="info-card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <h4 style="margin: 0 0 5px 0; font-size: 16px; color: var(--text-color); padding-left: 0;">Sundarban Courier</h4>
+                    <p style="margin: 0; font-size: 13px; color: var(--text-muted);">আপনার Tracking / CN Number দিয়ে পার্সেল ট্র্যাক করতে ক্লিক করুন।</p>
+                </div>
+                <a href="https://customer.sundarbancourierltd.com/tracking" target="_blank" style="background: var(--gold-color, #d4af37); color: #000; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 14px;">Track Now</a>
+            </div>
+
+            <div class="info-card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <h4 style="margin: 0 0 5px 0; font-size: 16px; color: var(--text-color); padding-left: 0;">Pathao Courier</h4>
+                    <p style="margin: 0; font-size: 13px; color: var(--text-muted);">আপনার Tracking Number দিয়ে পার্সেলের বর্তমান স্ট্যাটাস দেখুন।</p>
+                </div>
+                <a href="https://pathao.com/courier/" target="_blank" style="background: var(--gold-color, #d4af37); color: #000; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 14px;">Track Now</a>
+            </div>
+
+            <div class="info-card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <h4 style="margin: 0 0 5px 0; font-size: 16px; color: var(--text-color); padding-left: 0;">SteadFast Courier</h4>
+                    <p style="margin: 0; font-size: 13px; color: var(--text-muted);">আপনার Tracking Number দিয়ে পার্সেল ট্র্যাক করুন।</p>
+                </div>
+                <a href="https://www.steadfast.com.bd/tracking" target="_blank" style="background: var(--gold-color, #d4af37); color: #000; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 14px;">Track Now</a>
+            </div>
+        </div>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 25px; margin-bottom: 10px;">🔎 কীভাবে অর্ডার ট্র্যাক করবেন?</h3>
+        <ol style="padding-left: 20px; margin-bottom: 25px; line-height: 1.8;">
+            <li>আমাদের কাছ থেকে আপনার <strong>Tracking / CN Number</strong> সংগ্রহ করুন।</li>
+            <li>আপনার অর্ডারটি কোন Courier-এর মাধ্যমে পাঠানো হয়েছে তা নিশ্চিত করুন।</li>
+            <li>সংশ্লিষ্ট Courier-এর Tracking Page-এ যান।</li>
+            <li>আপনার Tracking / CN Number লিখুন।</li>
+            <li>Search / Track অপশনে ক্লিক করে আপনার পার্সেলের বর্তমান Status দেখুন।</li>
+        </ol>
+
+        <h3 style="color: var(--gold-color); font-size: 18px; margin-top: 25px; margin-bottom: 10px;">📌 Tracking Number না পেলে?</h3>
+        <p style="margin-bottom: 15px;">আপনার Tracking / CN Number না পাওয়া গেলে অথবা Tracking সংক্রান্ত কোনো সমস্যা হলে আমাদের সঙ্গে যোগাযোগ করুন:</p>
+
+        <div class="premium-contact-grid" style="margin-bottom: 25px;">
+            <div class="premium-contact-card">
+                <img src="https://i.ibb.co/vWtCxwz/images-3.png" alt="Phone" class="premium-contact-icon-img">
+                <div class="premium-contact-info">
+                    <span class="premium-contact-label">PHONE</span>
+                    <a href="tel:+8801832140613" class="premium-contact-value">+880 1832-140613</a>
+                </div>
+            </div>
+            <div class="premium-contact-card">
+                <img src="https://i.ibb.co/twXQ8zyW/images-4.png" alt="WhatsApp" class="premium-contact-icon-img">
+                <div class="premium-contact-info">
+                    <span class="premium-contact-label">WHATSAPP</span>
+                    <a href="https://wa.me/8801832140613" target="_blank" class="premium-contact-value">+880 1832-140613</a>
+                </div>
+            </div>
+            <div class="premium-contact-card">
+                <img src="https://i.ibb.co/tPxNN9j2/images-5.png" alt="Email" class="premium-contact-icon-img">
+                <div class="premium-contact-info">
+                    <span class="premium-contact-label">EMAIL</span>
+                    <a href="mailto:burqabazaarabdboutiques@gmail.com" class="premium-contact-value" style="word-break: break-all; font-size: 12px;">burqabazaarabdboutiques@gmail.com</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="policy-footer">
+            <h3 style="color: var(--gold-color); font-size: 18px; margin-bottom: 10px; text-align: center; padding-left: 0;">🛍️ Burqa Bazaar and Boutiques</h3>
+            <p style="margin-bottom: 15px; font-size: 14px;">আপনার অর্ডার নিরাপদে পৌঁছে দেওয়ার জন্য আমরা প্রয়োজনীয় সহযোগিতা করার চেষ্টা করি।</p>
+            <p style="font-weight: 600; font-size: 14px; line-height: 1.6;">Modesty in Every Look.<br>Elegance in Every Detail.</p>
+        </div>
+    </div>
+</div>
+
+        <!-- CART & CHECKOUT PAGE SECTION -->
+        <div id="cart-section" class="page-section">
+            <h2 style="margin-bottom: 15px;"><i class="fas fa-shopping-cart"></i> Your Shopping Cart & Checkout</h2>
+            <div id="cart-items-container" style="background: var(--card-bg); border: 1px solid var(--border-color); padding: 25px 20px; border-radius: 12px; margin-top: 20px; text-align: left;">
+                <!-- Cart items -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>About</h4>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="switchTab('about')">About Us</a></li>
+                    <li><a href="#" onclick="switchTab('privacy')">Privacy Policy</a></li>
+                    <li><a href="#" onclick="switchTab('terms')">Terms and Conditions</a></li>
+                    <li><a href="#" onclick="switchTab('return-policy')">Return Policy</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="switchTab('contact')">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Navigation</h4>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="switchTab('shop')">Shop</a></li>
+                    <li><a href="#" onclick="switchTab('track-order')">Track Order</a></li>
+                </ul>
+            </div>
+
+            <!-- NEWSLETTER + SOCIAL ICONS -->
+            <div class="footer-section" style="margin-top: 20px;">
+                <div class="newsletter-section">
+                    <h4>📬 Newsletter</h4>
+                    <p>নতুন কালেকশন ও অফার সবার আগে জানতে সাবস্ক্রাইব করুন।</p>
+                    <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                        <input type="email" id="newsletter-email" placeholder="Your email address" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="footer-section" style="text-align: center; margin-top: 10px;">
+                <h4>Follow Us</h4>
+                <div class="social-icons-row">
+                    <a href="#" class="social-icon facebook" title="Facebook" onclick="socialPlaceholder(event, 'Facebook')">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon instagram" title="Instagram" onclick="socialPlaceholder(event, 'Instagram')">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://wa.me/8801832140613" target="_blank" class="social-icon whatsapp" title="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="#" class="social-icon youtube" title="YouTube" onclick="socialPlaceholder(event, 'YouTube')">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="#" class="social-icon tiktok" title="TikTok" onclick="socialPlaceholder(event, 'TikTok')">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom-text" style="margin-top: 30px;">
+            &copy; 2026 Burqa Bazar and Boutiques. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Live Chat Button -->
+    <a href="https://wa.me/8801832140613?text=Hello,%20I%20want%20to%20know%20more%20about%20your%20products." target="_blank" class="whatsapp-chat-btn" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="bottom-nav">
+        <button class="bottom-nav-item active" id="nav-home" onclick="switchTab('home')">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </button>
+        <button class="bottom-nav-item" id="nav-shop" onclick="switchTab('shop')">
+            <i class="fas fa-shopping-bag"></i>
+            <span>Shop</span>
+        </button>
+        <button class="bottom-nav-item" id="nav-cart" onclick="switchTab('cart')">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Cart</span>
+        </button>
+    </div>
+
+    <!-- Toast Notification Element -->
+    <div id="custom-toast">
+      <div class="toast-content">
+        <span class="toast-icon">✨</span>
+        <p id="toast-message">Successfully added to cart!</p>
+      </div>
+    </div>
+
+    <!-- JavaScript Script -->
+    <script>
+        // ============================================
+        // FIREBASE PRODUCT LOADING
+        // ============================================
+        let productsData = []; // Empty initially, Firebase will fill
+        
+        // This function is called from Firebase SDK when products loaded
+        window.updateProductsData = function(firebaseProducts) {
+            productsData = firebaseProducts;
+            console.log('✅ Products loaded from Firebase:', productsData.length);
+            
+            // Re-render if functions available
+            if(typeof renderProducts === 'function') {
+                renderProducts(productsData);
+            }
+        };
+
+        // Start loading products when DOM ready
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                if(typeof window.loadProductsFromFirebase === 'function') {
+                    window.loadProductsFromFirebase();
+                }
+            }, 500);
+        });
+
+        // ============================================
+        // GOOGLE ANALYTICS EVENT TRACKING
+        // ============================================
+        function trackEvent(eventName, params) {
+            if(typeof gtag === 'function') {
+                gtag('event', eventName, params || {});
+            }
+        }
+
+        // ============================================
+        // MINI CART SIDEBAR
+        // ============================================
+        function openMiniCart() {
+            renderMiniCart();
+            document.getElementById('mini-cart-overlay').classList.add('active');
+            document.getElementById('mini-cart-sidebar').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMiniCart() {
+            document.getElementById('mini-cart-overlay').classList.remove('active');
+            document.getElementById('mini-cart-sidebar').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function renderMiniCart() {
+            const body = document.getElementById('mini-cart-body');
+            const footer = document.getElementById('mini-cart-footer');
+            const subtotalEl = document.getElementById('mini-cart-subtotal');
+
+            if(!body) return;
+
+            if(cart.length === 0) {
+                body.innerHTML = `
+                    <div class="mini-cart-empty">
+                        <i class="fas fa-shopping-bag"></i>
+                        <p>Your cart is empty!</p>
+                        <button class="mini-cart-shop-btn" onclick="closeMiniCart(); switchTab('shop');">
+                            <i class="fas fa-shopping-bag"></i> Start Shopping
+                        </button>
+                    </div>
+                `;
+                footer.style.display = 'none';
+                return;
+            }
+
+            let subtotal = 0;
+            let html = '';
+            cart.forEach((item, index) => {
+                let priceText = (typeof item.price === 'number') 
+                    ? '৳ ' + item.price + ' × ' + item.quantity + ' = <strong>৳ ' + (item.price * item.quantity) + '</strong>'
+                    : '<span style="color:#ffb15b;">Coming Soon</span>';
+                
+                if(typeof item.price === 'number') {
+                    subtotal += (item.price * item.quantity);
+                }
+
+                let metaText = '';
+                if(item.size) metaText += 'Size: ' + item.size;
+                if(item.color) metaText += (metaText ? ' • ' : '') + 'Color: ' + item.color;
+
+                html += `
+                    <div class="mini-cart-item">
+                        <img src="${item.image}" alt="${item.name}" class="mini-cart-item-img">
+                        <div class="mini-cart-item-info">
+                            <div class="mini-cart-item-name">${item.name}</div>
+                            ${metaText ? '<div class="mini-cart-item-meta">' + metaText + '</div>' : ''}
+                            <div class="mini-cart-item-price">${priceText}</div>
+                        </div>
+                        <button class="mini-cart-item-remove" onclick="removeFromCart(${index}); renderMiniCart();" title="Remove">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                `;
+            });
+
+            body.innerHTML = html;
+            footer.style.display = 'block';
+            subtotalEl.textContent = '৳ ' + subtotal;
+        }
+
+        // ============================================
+        // NEWSLETTER SUBSCRIBE
+        // ============================================
+        function subscribeNewsletter(event) {
+            event.preventDefault();
+            const emailInput = document.getElementById('newsletter-email');
+            const email = emailInput.value.trim();
+
+            if(!email || !email.includes('@')) {
+                showToast('⚠️ সঠিক email address দিন');
+                return;
+            }
+
+            let subscribers = JSON.parse(localStorage.getItem('burqa_newsletter')) || [];
+            if(subscribers.includes(email)) {
+                showToast('ℹ️ আপনি ইতিমধ্যে সাবস্ক্রাইব করেছেন');
+                emailInput.value = '';
+                return;
+            }
+
+            subscribers.push(email);
+            localStorage.setItem('burqa_newsletter', JSON.stringify(subscribers));
+            trackEvent('newsletter_signup', { email_domain: email.split('@')[1] });
+
+            showToast('✅ ধন্যবাদ! আপনি সাবস্ক্রাইব করেছেন');
+            emailInput.value = '';
+        }
+
+        // ============================================
+        // SOCIAL MEDIA PLACEHOLDER
+        // ============================================
+        function socialPlaceholder(event, platform) {
+            event.preventDefault();
+            showToast('⏳ ' + platform + ' link শীঘ্রই আসছে!');
+        }
+
+        // ============================================
+        // SKELETON LOADER
+        // ============================================
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const loader = document.getElementById('skeleton-loader');
+                if(loader) loader.classList.add('hidden');
+                document.body.classList.add('content-ready');
+            }, 800);
+        });
+
+        // ============================================
+        // HEADER SHRINK
+        // ============================================
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if(!header) return;
+            if(window.scrollY > 80) {
+                header.classList.add('shrunk');
+            } else {
+                header.classList.remove('shrunk');
+            }
+        });
+
+        // ============================================
+        // BACK TO TOP
+        // ============================================
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('back-to-top');
+            if(!btn) return;
+            if(window.scrollY > 400) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
+
+        // ============================================
+        // RIPPLE EFFECT
+        // ============================================
+        document.addEventListener('click', function(e) {
+            const btn = e.target.closest('button, .size-btn, .color-btn, .add-to-cart-grid-btn, .copy-btn, .submit-review-btn, .mini-cart-btn');
+            if(!btn) return;
+            const rect = btn.getBoundingClientRect();
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple-effect';
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+            ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+            btn.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        });
+
+        // ============================================
+        // WISHLIST
+        // ============================================
+        let wishlist = JSON.parse(localStorage.getItem('burqa_wishlist')) || [];
+
+        function toggleWishlist(productId, event) {
+            if(event) {
+                event.stopPropagation();
+                event.preventDefault();
+            }
+            const idx = wishlist.indexOf(productId);
+            if(idx > -1) {
+                wishlist.splice(idx, 1);
+                showToast('❤️ Wishlist থেকে সরানো হয়েছে');
+            } else {
+                wishlist.push(productId);
+                showToast('❤️ Wishlist এ যোগ হয়েছে');
+                trackEvent('add_to_wishlist', { product_id: productId });
+            }
+            localStorage.setItem('burqa_wishlist', JSON.stringify(wishlist));
+            document.querySelectorAll('.wishlist-btn').forEach(btn => {
+                const pid = parseInt(btn.getAttribute('data-pid'));
+                if(wishlist.includes(pid)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        // ============================================
+        // SHARE
+        // ============================================
+        let currentShareProduct = null;
+
+        function openShareModal(productId, event) {
+            if(event) {
+                event.stopPropagation();
+                event.preventDefault();
+            }
+            const product = productsData.find(p => p.id === productId);
+            if(!product) return;
+            currentShareProduct = product;
+
+            const pageUrl = window.location.href.split('?')[0].split('#')[0];
+            const shareText = `Check out this product from Burqa Bazaar: ${product.name}`;
+            const shareUrl = pageUrl + '?product=' + productId;
+
+            document.getElementById('share-whatsapp').href = `https://wa.me/?text=${encodeURIComponent(shareText + ' - ' + shareUrl)}`;
+            document.getElementById('share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+            document.getElementById('share-twitter').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+
+            document.getElementById('share-modal').classList.add('active');
+            trackEvent('share', { product_id: productId, content_type: 'product' });
+        }
+
+        function closeShareModal(event) {
+            if(event && event.target !== event.currentTarget) return;
+            document.getElementById('share-modal').classList.remove('active');
+        }
+
+        function copyProductLink() {
+            if(!currentShareProduct) return;
+            const pageUrl = window.location.href.split('?')[0].split('#')[0];
+            const shareUrl = pageUrl + '?product=' + currentShareProduct.id;
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                showToast('✅ Link কপি হয়েছে!');
+                closeShareModal();
+            }).catch(() => {
+                showToast('❌ কপি করা যায়নি');
+            });
+        }
+
+        // ============================================
+        // RATING & REVIEW SYSTEM
+        // ============================================
+        function getProductReviews(productId) {
+            const allReviews = JSON.parse(localStorage.getItem('burqa_reviews')) || {};
+            return allReviews[productId] || [];
+        }
+
+        function saveProductReview(productId, review) {
+            const allReviews = JSON.parse(localStorage.getItem('burqa_reviews')) || {};
+            if(!allReviews[productId]) allReviews[productId] = [];
+            allReviews[productId].unshift(review);
+            localStorage.setItem('burqa_reviews', JSON.stringify(allReviews));
+        }
+
+        function calculateRatingStats(productId) {
+            const reviews = getProductReviews(productId);
+            if(reviews.length === 0) {
+                return { average: 0, total: 0, distribution: {5:0,4:0,3:0,2:0,1:0} };
+            }
+            const distribution = {5:0,4:0,3:0,2:0,1:0};
+            let sum = 0;
+            reviews.forEach(r => {
+                sum += r.rating;
+                if(distribution[r.rating] !== undefined) distribution[r.rating]++;
+            });
+            return {
+                average: (sum / reviews.length).toFixed(1),
+                total: reviews.length,
+                distribution: distribution
+            };
+        }
+
+        function renderStars(rating, size) {
+            let html = '';
+            const full = Math.floor(rating);
+            const half = (rating - full) >= 0.5;
+            for(let i = 1; i <= 5; i++) {
+                if(i <= full) html += '<i class="fas fa-star"></i>';
+                else if(i === full + 1 && half) html += '<i class="fas fa-star-half-alt"></i>';
+                else html += '<i class="far fa-star"></i>';
+            }
+            return html;
+        }
+
+        let currentRating = 0;
+
+        function setRating(rating) {
+            currentRating = rating;
+            const stars = document.querySelectorAll('#star-picker .star');
+            stars.forEach((star, idx) => {
+                if(idx < rating) star.classList.add('active');
+                else star.classList.remove('active');
+            });
+        }
+
+        function submitReview() {
+            if(!currentProductId) return;
+            const product = productsData.find(p => p.id === currentProductId);
+            if(!product) return;
+
+            if(currentRating === 0) {
+                showToast('⚠️ অনুগ্রহ করে ⭐ rating দিন');
+                return;
+            }
+
+            const nameInput = document.getElementById('reviewer-name');
+            const textInput = document.getElementById('reviewer-text');
+            const name = nameInput ? nameInput.value.trim() : '';
+            const text = textInput ? textInput.value.trim() : '';
+
+            if(!name) {
+                showToast('⚠️ আপনার নাম লিখুন');
+                return;
+            }
+
+            const review = {
+                name: name,
+                rating: currentRating,
+                text: text || '(no comment)',
+                date: new Date().toISOString()
+            };
+
+            saveProductReview(currentProductId, review);
+            trackEvent('submit_review', { product_id: currentProductId, rating: currentRating });
+            showToast('✅ ধন্যবাদ! আপনার review যোগ হয়েছে');
+            
+            currentRating = 0;
+            openProductDetails(currentProductId);
+        }
+
+        function formatReviewDate(isoDate) {
+            const d = new Date(isoDate);
+            const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+        }
+
+        function renderRatingSection(productId) {
+            const stats = calculateRatingStats(productId);
+            const reviews = getProductReviews(productId);
+
+            let barsHtml = '';
+            for(let star = 5; star >= 1; star--) {
+                const count = stats.distribution[star] || 0;
+                const pct = stats.total > 0 ? (count / stats.total) * 100 : 0;
+                barsHtml += `<div class="rating-bar-row">
+                    <span class="star-label">${star}★</span>
+                    <div class="rating-bar-track"><div class="rating-bar-fill" style="width: ${pct}%"></div></div>
+                    <span class="rating-bar-count">${count}</span>
+                </div>`;
+            }
+
+            let reviewsHtml = '';
+            if(reviews.length === 0) {
+                reviewsHtml = '<p style="text-align:center; color:var(--text-muted); font-size:13px; padding:15px;">এখনো কোনো review নেই। প্রথম review আপনি দিন! 🌟</p>';
+            } else {
+                reviews.slice(0, 5).forEach(r => {
+                    reviewsHtml += `<div class="review-card">
+                        <div class="review-header">
+                            <span class="review-name">${r.name}</span>
+                            <span class="review-stars">${renderStars(r.rating)}</span>
+                        </div>
+                        <p class="review-text">${r.text}</p>
+                        <p class="review-date">${formatReviewDate(r.date)}</p>
+                    </div>`;
+                });
+            }
+
+            return `
+                <div class="rating-summary">
+                    <div class="rating-average-box">
+                        <div class="rating-average">${stats.average || '0.0'}</div>
+                        <div class="rating-average-stars">${renderStars(parseFloat(stats.average) || 0)}</div>
+                        <div class="rating-total">${stats.total} review${stats.total !== 1 ? 's' : ''}</div>
+                    </div>
+                    <div class="rating-bars">${barsHtml}</div>
+                </div>
+
+                <div class="review-section">
+                    <h3>✍️ Write a Review</h3>
+                    <div class="star-picker" id="star-picker">
+                        <i class="fas fa-star star" onclick="setRating(1)"></i>
+                        <i class="fas fa-star star" onclick="setRating(2)"></i>
+                        <i class="fas fa-star star" onclick="setRating(3)"></i>
+                        <i class="fas fa-star star" onclick="setRating(4)"></i>
+                        <i class="fas fa-star star" onclick="setRating(5)"></i>
+                    </div>
+                    <input type="text" class="review-input" id="reviewer-name" placeholder="Your name *" maxlength="40">
+                    <textarea class="review-textarea" id="reviewer-text" placeholder="Your review (optional)" rows="2" maxlength="200"></textarea>
+                    <button class="submit-review-btn" onclick="submitReview()"><i class="fas fa-paper-plane"></i> Submit Review</button>
+                </div>
+
+                <div class="review-list">${reviewsHtml}</div>
+            `;
+        }
+
+        // ============================================
+        // RELATED PRODUCTS
+        // ============================================
+        function renderRelatedProducts(productId) {
+            const product = productsData.find(p => p.id === productId);
+            if(!product) return '';
+
+            let related = productsData.filter(p => p.category === product.category && p.id !== productId);
+            
+            if(related.length < 2) {
+                const others = productsData.filter(p => p.id !== productId && p.category !== product.category);
+                related = related.concat(others);
+            }
+            
+            related = related.slice(0, 3);
+            
+            if(related.length === 0) return '';
+
+            let html = `<div class="related-section">
+                <div class="related-title">✨ You May Also Like</div>
+                <div class="related-grid">`;
+            
+            related.forEach(prod => {
+                let priceDisplay = (typeof prod.price === 'number') ? ('৳ ' + prod.price) : prod.price;
+                const stats = calculateRatingStats(prod.id);
+                html += `<div class="product-card" onclick="openProductDetails(${prod.id})">
+                    <div class="product-img-box">
+                        <img src="${prod.image}" alt="${prod.name}">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category-tag">${prod.category}</span>
+                        <div class="product-title">${prod.name}</div>
+                        ${stats.total > 0 ? `<div class="product-rating"><span class="stars">${renderStars(parseFloat(stats.average))}</span><span class="review-count">(${stats.total})</span></div>` : ''}
+                        <div class="product-price-row">
+                            <span class="product-price">${priceDisplay}</span>
+                        </div>
+                    </div>
+                </div>`;
+            });
+
+            html += `</div></div>`;
+            return html;
+        }
+
+        // ============================================
+        // URL ROUTING
+        // ============================================
+        function updateURL(tabName, productId) {
+            let url = window.location.pathname;
+            if(tabName === 'home') {
+                window.history.replaceState({}, '', url);
+            } else if(tabName === 'product-details' && productId) {
+                window.history.replaceState({}, '', url + '?product=' + productId);
+            } else {
+                window.history.replaceState({}, '', url + '#' + tabName);
+            }
+        }
+
+        function handleInitialURL() {
+            const params = new URLSearchParams(window.location.search);
+            const productId = params.get('product');
+            const hash = window.location.hash.replace('#', '');
+
+            if(productId) {
+                const pid = parseInt(productId);
+                if(productsData.find(p => p.id === pid)) {
+                    setTimeout(() => openProductDetails(pid), 500);
+                    return;
+                }
+            }
+            
+            if(hash && ['shop', 'about', 'privacy', 'terms', 'return-policy', 'contact', 'track-order', 'cart'].includes(hash)) {
+                setTimeout(() => switchTab(hash), 500);
+            }
+        }
+
+        // ============================================
+        // SIDEBAR & THEME
+        // ============================================
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const openSidebar = document.getElementById('openSidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+
+        openSidebar.addEventListener('click', () => {
+            sidebar.classList.add('active');
+            overlay.classList.add('active');
+        });
+
+        closeSidebar.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        const htmlElement = document.documentElement;
+        const sidebarThemeToggleBtn = document.getElementById('sidebarThemeToggleBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+        const headerThemeToggleBtn = document.getElementById('headerThemeToggleBtn');
+
+        function toggleTheme() {
+            if (htmlElement.getAttribute('data-theme') === 'dark') {
+                htmlElement.setAttribute('data-theme', 'light');
+                if(themeIcon) themeIcon.className = 'fas fa-sun';
+                if(themeText) themeText.textContent = 'Light';
+            } else {
+                htmlElement.setAttribute('data-theme', 'dark');
+                if(themeIcon) themeIcon.className = 'fas fa-moon';
+                if(themeText) themeText.textContent = 'Dark';
+            }
+        }
+
+        if(headerThemeToggleBtn) headerThemeToggleBtn.addEventListener('click', toggleTheme);
+        if(sidebarThemeToggleBtn) sidebarThemeToggleBtn.addEventListener('click', toggleTheme);
+
+        function switchTab(tabName) {
+            const sections = ['home', 'shop', 'product-details', 'about', 'privacy', 'terms', 'return-policy', 'contact', 'track-order', 'cart'];
+            sections.forEach(sec => {
+                let el = document.getElementById(sec + '-section');
+                if(el) el.classList.remove('active-page');
+            });
+
+            document.getElementById('nav-home').classList.remove('active');
+            document.getElementById('nav-shop').classList.remove('active');
+            document.getElementById('nav-cart').classList.remove('active');
+
+            let targetSection = document.getElementById(tabName + '-section');
+            if (targetSection) targetSection.classList.add('active-page');
+
+            if (tabName === 'home' || tabName === 'shop' || tabName === 'cart') {
+                let navBtn = document.getElementById('nav-' + tabName);
+                if(navBtn) navBtn.classList.add('active');
+            }
+
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+            window.scrollTo(0, 0);
+
+            if(tabName !== 'product-details') {
+                updateURL(tabName);
+            }
+
+            trackEvent('page_view', {
+                page_title: tabName,
+                page_location: window.location.href
+            });
+
+            const policyPages = ['about', 'privacy', 'terms', 'return-policy', 'contact', 'track-order'];
+            if(policyPages.includes(tabName)) {
+                setTimeout(() => triggerPolicyAnimation(tabName + '-section'), 50);
+            }
+        }
+
+        function triggerPolicyAnimation(sectionId) {
+            const section = document.getElementById(sectionId);
+            if(!section) return;
+            const box = section.querySelector('.page-content-box');
+            if(!box) return;
+
+            const children = Array.from(box.children);
+            children.forEach((child, index) => {
+                child.classList.remove('reveal-now');
+                setTimeout(() => {
+                    child.classList.add('reveal-now');
+                }, 60 * index);
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+            const progress = document.getElementById('reading-progress');
+            if(!progress) return;
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            progress.style.width = scrollPercent + '%';
+        });
+
+        const originalSwitchTab = switchTab;
+        switchTab = function(tabName) {
+            const progress = document.getElementById('reading-progress');
+            if(progress) progress.style.width = '0%';
+            originalSwitchTab(tabName);
+        };
+
+        // ============================================
+        // RENDER PRODUCTS
+        // ============================================
+        function renderProducts(itemsToRender) {
+            const gridContainer = document.getElementById('product-grid-container');
+            if(!gridContainer) return;
+
+            if(!itemsToRender || itemsToRender.length === 0) {
+                gridContainer.innerHTML = `<p style="grid-column: span 2; text-align: center; color: var(--text-muted); padding: 30px;">Loading products...</p>`;
+                return;
+            }
+
+            let html = '';
+            itemsToRender.forEach(prod => {
+                let priceDisplay = (typeof prod.price === 'number') ? ('৳ ' + prod.price) : prod.price;
+                const isWishlisted = wishlist.includes(prod.id);
+                const stats = calculateRatingStats(prod.id);
+                
+                let badgeHtml = '';
+                if(prod.badge) {
+                    badgeHtml = `<span class="product-badge ${prod.badge}">${prod.badgeText || prod.badge.toUpperCase()}</span>`;
+                }
+
+                let ratingHtml = '';
+                if(stats.total > 0) {
+                    ratingHtml = `<div class="product-rating">
+                        <span class="stars">${renderStars(parseFloat(stats.average))}</span>
+                        <span class="review-count">(${stats.total})</span>
+                    </div>`;
+                }
+
+                html += `
+                    <div class="product-card" onclick="openProductDetails(${prod.id})">
+                        <div class="product-img-box">
+                            ${badgeHtml}
+                            <button class="wishlist-btn ${isWishlisted ? 'active' : ''}" data-pid="${prod.id}" onclick="toggleWishlist(${prod.id}, event)" title="Add to Wishlist">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                            <img src="${prod.image}" alt="${prod.name}">
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category-tag">${prod.category}</span>
+                            <div class="product-title">${prod.name}</div>
+                            ${ratingHtml}
+                            <div class="product-price-row">
+                                <span class="product-price">${priceDisplay}</span>
+                                <button class="add-to-cart-grid-btn" onclick="event.stopPropagation(); quickAddToCart(${prod.id})"><i class="fas fa-shopping-bag"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            gridContainer.innerHTML = html;
+        }
+
+        function quickAddToCart(productId) {
+            openProductDetails(productId);
+            showToast('অনুগ্রহ করে Size ও Color নির্বাচন করুন');
+        }
+
+        let currentProductId = null;
+        let selectedSize = null;
+        let selectedColor = null;
+
+        function openProductDetails(productId) {
+            const product = productsData.find(p => p.id === productId);
+            if(!product) return;
+
+            currentProductId = productId;
+            selectedSize = null;
+            selectedColor = null;
+            currentRating = 0;
+
+            trackEvent('view_item', {
+                currency: 'BDT',
+                value: typeof product.price === 'number' ? product.price : 0,
+                items: [{
+                    item_id: product.id,
+                    item_name: product.name,
+                    item_category: product.category
+                }]
+            });
+
+            const hasSizes = product.sizes && product.sizes.length > 0;
+            const hasColors = product.colors && product.colors.length > 0;
+
+            const mainImageUrl = product.colors && product.colors.length > 0 ? product.colors[0].image : product.image;
+            let mainImageHtml = `<img src="${mainImageUrl}" alt="${product.name}" class="main-image-preview" id="main-product-image" onclick="openImageModal(this.src)">`;
+
+            let sizeHtml = '';
+            if(hasSizes) {
+                sizeHtml = `<div class="option-label">📏 Select Size <span class="selected-info" id="size-info"></span></div>
+                            <div class="size-options-box" id="size-options-box">`;
+                product.sizes.forEach(size => {
+                    sizeHtml += `<button type="button" class="size-btn" data-size="${size}" onclick="selectSize('${size}')">${size}</button>`;
+                });
+                sizeHtml += `</div>`;
+            }
+
+            let colorHtml = '';
+            if(hasColors) {
+                colorHtml = `<div class="option-label">🎨 Select Color <span class="selected-info" id="color-info"></span></div>
+                             <div class="color-options-box" id="color-options-box">`;
+                product.colors.forEach(color => {
+                    colorHtml += `<button type="button" class="color-btn" data-color="${color.name}" onclick="selectColor('${color.name}', '${color.image}')">
+                        <img src="${color.image}" alt="${color.name}" class="color-swatch">
+                        <span class="color-name">${color.name}</span>
+                    </button>`;
+                });
+                colorHtml += `</div>`;
+            }
+
+            let priceDisplay = (typeof product.price === 'number') ? ('৳ ' + product.price) : product.price;
+            const isWishlisted = wishlist.includes(product.id);
+            const stats = calculateRatingStats(product.id);
+            
+            let badgeHtml = '';
+            if(product.badge) {
+                badgeHtml = `<span class="product-badge ${product.badge}" style="position: static; display: inline-block; margin-left: 8px;">${product.badgeText || product.badge.toUpperCase()}</span>`;
+            }
+
+            let ratingLineHtml = '';
+            if(stats.total > 0) {
+                ratingLineHtml = `<div class="product-rating" style="margin-top: 5px;">
+                    <span class="stars" style="font-size: 14px;">${renderStars(parseFloat(stats.average))}</span>
+                    <span class="review-count" style="font-size: 12px;">${stats.average} (${stats.total} review${stats.total !== 1 ? 's' : ''})</span>
+                </div>`;
+            }
+
+            const ratingSectionHtml = renderRatingSection(product.id);
+            const relatedHtml = renderRelatedProducts(product.id);
+
+            const detailsContainer = document.getElementById('product-details-content');
+            detailsContainer.innerHTML = `
+                <button onclick="switchTab('shop')" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-color); padding: 6px 12px; border-radius: 6px; cursor: pointer; margin-bottom: 15px;"><i class="fas fa-arrow-left"></i> Back to Shop</button>
+                
+                ${mainImageHtml}
+
+                <span class="product-category-tag">${product.category}</span>
+                <div class="details-title">${product.name} ${badgeHtml}</div>
+                ${ratingLineHtml}
+                <div class="details-price" style="margin-top: 10px;">${priceDisplay}</div>
+
+                ${sizeHtml}
+                ${colorHtml}
+                
+                <div class="selection-warning" id="selection-warning">⚠️ অনুগ্রহ করে Size এবং Color নির্বাচন করুন</div>
+
+                <div style="display: flex; gap: 10px; margin-top: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+                    <button onclick="addToCartFromDetails()" style="flex: 1; min-width: 180px; background: var(--gold-color); color: #0b0b0d; border: none; padding: 14px; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer;"><i class="fas fa-shopping-bag"></i> Add to Cart</button>
+                    <button onclick="toggleWishlist(${product.id}, event)" class="wishlist-btn ${isWishlisted ? 'active' : ''}" data-pid="${product.id}" style="position: static; width: 50px; height: 50px; background: ${isWishlisted ? '#ff007f' : 'var(--bg-color)'}; border: 1.5px solid ${isWishlisted ? '#ff007f' : 'var(--border-color)'}; color: ${isWishlisted ? '#fff' : 'var(--text-color)'}; border-radius: 8px; font-size: 18px;">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                    <button onclick="openShareModal(${product.id}, event)" class="share-btn" style="width: 50px; height: 50px; justify-content: center; padding: 0;">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
+
+                <div class="details-desc-box">
+                    ${product.fullDescription}
+                </div>
+
+                ${ratingSectionHtml}
+
+                ${relatedHtml}
+            `;
+            
+            updateURL('product-details', productId);
+            switchTab('product-details');
+            window.scrollTo(0, 0);
+        }
+
+        function selectSize(size) {
+            selectedSize = size;
+            const buttons = document.querySelectorAll('#size-options-box .size-btn');
+            buttons.forEach(btn => {
+                if(btn.getAttribute('data-size') === size) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+            const info = document.getElementById('size-info');
+            if(info) info.textContent = '✓ ' + size;
+            hideWarning();
+        }
+
+        function selectColor(colorName, imageUrl) {
+            selectedColor = colorName;
+            const buttons = document.querySelectorAll('#color-options-box .color-btn');
+            buttons.forEach(btn => {
+                if(btn.getAttribute('data-color') === colorName) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+            const info = document.getElementById('color-info');
+            if(info) info.textContent = '✓ ' + colorName;
+
+            const mainImg = document.getElementById('main-product-image');
+            if(mainImg) mainImg.src = imageUrl;
+
+            hideWarning();
+        }
+
+        function hideWarning() {
+            const warn = document.getElementById('selection-warning');
+            if(warn) warn.classList.remove('show');
+        }
+
+        function showWarning() {
+            const warn = document.getElementById('selection-warning');
+            if(warn) warn.classList.add('show');
+        }
+
+        function addToCartFromDetails() {
+            if(!currentProductId) return;
+            const product = productsData.find(p => p.id === currentProductId);
+            if(!product) return;
+
+            const hasSizes = product.sizes && product.sizes.length > 0;
+            const hasColors = product.colors && product.colors.length > 0;
+
+            if(hasSizes && !selectedSize) {
+                showWarning();
+                showToast('⚠️ অনুগ্রহ করে Size নির্বাচন করুন');
+                return;
+            }
+            if(hasColors && !selectedColor) {
+                showWarning();
+                showToast('⚠️ অনুগ্রহ করে Color নির্বাচন করুন');
+                return;
+            }
+
+            addToCartWithOptions(product, selectedSize, selectedColor);
+        }
+
+        function addToCartWithOptions(product, size, color) {
+            const cartKey = product.id + '_' + (size || 'nosize') + '_' + (color || 'nocolor');
+            const existingItem = cart.find(item => item.cartKey === cartKey);
+
+            if(existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    cartKey: cartKey,
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    size: size,
+                    color: color,
+                    quantity: 1
+                });
+            }
+
+            localStorage.setItem('burqa_cart', JSON.stringify(cart));
+            updateCartUI();
+            
+            trackEvent('add_to_cart', {
+                currency: 'BDT',
+                value: typeof product.price === 'number' ? product.price : 0,
+                items: [{
+                    item_id: product.id,
+                    item_name: product.name,
+                    item_category: product.category,
+                    item_variant: (size || '') + ' ' + (color || ''),
+                    quantity: 1
+                }]
+            });
+            
+            const cartIcon = document.getElementById('cart-icon-wrapper');
+            if(cartIcon) {
+                cartIcon.classList.add('bounce');
+                setTimeout(() => cartIcon.classList.remove('bounce'), 600);
+            }
+            
+            let msg = product.name;
+            if(size) msg += ' (Size: ' + size + ')';
+            if(color) msg += ' (' + color + ')';
+            msg += ' added to cart!';
+            showToast(msg);
+
+            setTimeout(() => renderMiniCart(), 100);
+        }
+
+        function openImageModal(imgSrc) {
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-zoomed-img');
+            modalImg.src = imgSrc;
+            modal.classList.add('active');
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('image-modal');
+            modal.classList.remove('active');
+        }
+
+        function filterCategory(categoryName) {
+            document.getElementById('shop-title').textContent = categoryName;
+            document.getElementById('shop-desc').textContent = 'Showing exclusive items for ' + categoryName;
+            const filtered = productsData.filter(p => p.category === categoryName);
+            renderProducts(filtered);
+            switchTab('shop');
+        }
+
+        function filterProductsBySearch() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            if(query.trim() === '') {
+                document.getElementById('shop-title').textContent = "Shop All Collections";
+                document.getElementById('shop-desc').textContent = "Explore our exclusive range of premium hijabs, burqas, and abayas.";
+                renderProducts(productsData);
+            } else {
+                document.getElementById('shop-title').textContent = "Search Results";
+                document.getElementById('shop-desc').textContent = "Showing matches for: " + query;
+                const filtered = productsData.filter(p => p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
+                renderProducts(filtered);
+            }
+            switchTab('shop');
+        }
+
+        let cart = JSON.parse(localStorage.getItem('burqa_cart')) || [];
+        let toastTimeout;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            // Firebase will load products, then call updateProductsData
+            // Fallback render (in case Firebase slow)
+            setTimeout(() => {
+                if(productsData.length === 0) {
+                    renderProducts([]);
+                }
+            }, 2000);
+            
+            updateCartUI();
+            
+            // Wait for Firebase data, then handle URL
+            setTimeout(handleInitialURL, 2500);
+        });
+
+        function showToast(message) {
+            const toast = document.getElementById('custom-toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.textContent = message;
+            toast.classList.add('toast-visible');
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('toast-visible');
+            }, 3000);
+        }
+
+        function copyNumber(num, typeName) {
+            navigator.clipboard.writeText(num).then(() => {
+                showToast(typeName + ' number copied: ' + num);
+            }).catch(err => {
+                showToast('Failed to copy number!');
+            });
+        }
+
+        function increaseQty(index) {
+            cart[index].quantity += 1;
+            localStorage.setItem('burqa_cart', JSON.stringify(cart));
+            updateCartUI();
+            renderMiniCart();
+        }
+
+        function decreaseQty(index) {
+            if (cart[index].quantity > 1) {
+                cart[index].quantity -= 1;
+            } else {
+                cart.splice(index, 1);
+            }
+            localStorage.setItem('burqa_cart', JSON.stringify(cart));
+            updateCartUI();
+            renderMiniCart();
+        }
+
+        function removeFromCart(index) {
+            let removedItem = cart[index].name;
+            cart.splice(index, 1);
+            localStorage.setItem('burqa_cart', JSON.stringify(cart));
+            updateCartUI();
+            showToast(removedItem + ' removed from cart!');
+        }
+
+        function updateDeliveryCharge() {
+            const shippingSelect = document.getElementById('shipping-select');
+            const shippingVal = shippingSelect ? shippingSelect.value : '60';
+            if (shippingVal === '60') {
+                showToast('📍 Inside Feni (৳60) selected');
+            } else {
+                showToast('📦 Outside Feni (৳130) selected');
+            }
+            updateCartUI();
+        }
+
+        function handlePaymentChange() {
+            const selectedEl = document.querySelector('input[name="payment"]:checked');
+            if(!selectedEl) return;
+            const selectedPayment = selectedEl.value;
+            
+            const codBox = document.getElementById('cod-instruction-box');
+            const bkashBox = document.getElementById('bkash-instruction-box');
+            const nagadBox = document.getElementById('nagad-instruction-box');
+            
+            if(codBox) codBox.style.display = 'none';
+            if(bkashBox) bkashBox.style.display = 'none';
+            if(nagadBox) nagadBox.style.display = 'none';
+
+            let subtotal = 0;
+            cart.forEach(item => {
+                if(typeof item.price === 'number') {
+                    subtotal += (item.price * item.quantity);
+                }
+            });
+            const shippingSelect = document.getElementById('shipping-select');
+            const deliveryCharge = shippingSelect ? parseInt(shippingSelect.value) : 60;
+            const totalAmount = subtotal + deliveryCharge;
+
+            if (selectedPayment === 'Cash on Delivery') {
+                if(codBox) {
+                    codBox.style.display = 'block';
+                    const amt = document.getElementById('cod-amount-text');
+                    if(amt) amt.textContent = deliveryCharge;
+                }
+            } else if (selectedPayment === 'Bkash') {
+                if(bkashBox) {
+                    bkashBox.style.display = 'block';
+                    const amt = document.getElementById('bkash-amount-text');
+                    if(amt) amt.textContent = totalAmount;
+                }
+            } else if (selectedPayment === 'Nagad') {
+                if(nagadBox) {
+                    nagadBox.style.display = 'block';
+                    const amt = document.getElementById('nagad-amount-text');
+                    if(amt) amt.textContent = totalAmount;
+                }
+            }
+        }
+
+        function updateCartUI() {
+            const cartCount = document.getElementById('cart-count');
+            const cartContainer = document.getElementById('cart-items-container');
+            
+            let totalItemsCount = 0;
+            cart.forEach(item => totalItemsCount += item.quantity);
+            cartCount.textContent = totalItemsCount;
+
+            if (cart.length === 0) {
+                cartContainer.innerHTML = `
+                    <div style="text-align: center; padding: 30px 0;">
+                        <i class="fas fa-shopping-cart" style="font-size: 40px; color: var(--gold-color); margin-bottom: 15px;"></i>
+                        <p style="color: var(--text-muted); font-size: 15px;">Your cart is currently empty!</p>
+                    </div>
+                `;
+            } else {
+                let subtotal = 0;
+                let hasPriceComingSoon = false;
+                cart.forEach(item => {
+                    if(typeof item.price === 'number') {
+                        subtotal += (item.price * item.quantity);
+                    } else {
+                        hasPriceComingSoon = true;
+                    }
+                });
+
+                let shippingSelect = document.getElementById('shipping-select');
+                let deliveryCharge = shippingSelect ? parseInt(shippingSelect.value) : 60;
+                let totalAmount = subtotal + deliveryCharge;
+
+                let html = `<h3 style="color: var(--gold-color); margin-bottom: 15px;">Selected Items</h3>
+                <ul style="list-style: none; padding: 0; margin-bottom: 20px;">`;
+                
+                cart.forEach((item, index) => {
+                    let priceText = (typeof item.price === 'number') 
+                        ? '৳ ' + item.price + ' × ' + item.quantity + ' = <strong>৳ ' + (item.price * item.quantity) + '</strong>'
+                        : '<span style="color:#ffb15b;">Price Coming Soon</span>';
+                    
+                    let metaText = '';
+                    if(item.size) metaText += 'Size: ' + item.size;
+                    if(item.color) metaText += (metaText ? ' • ' : '') + 'Color: ' + item.color;
+
+                    html += `<li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border-color); font-size: 14px; gap: 10px;">
+                        <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
+                            <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+                            <div>
+                                <span style="font-weight: 600;">${item.name}</span>
+                                ${metaText ? '<span class="cart-item-meta">' + metaText + '</span>' : ''}
+                                <span style="color: var(--gold-color); font-size: 13px; display: block; margin-top: 3px;">${priceText}</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="qty-control">
+                                <button type="button" class="qty-btn" onclick="decreaseQty(${index})">-</button>
+                                <span style="font-weight: bold; min-width: 15px; text-align: center;">${item.quantity}</span>
+                                <button type="button" class="qty-btn" onclick="increaseQty(${index})">+</button>
+                            </div>
+                            <button type="button" class="remove-item-btn" onclick="removeFromCart(${index})">Remove</button>
+                        </div>
+                    </li>`;
+                });
+
+                html += `</ul>
+                <div style="background: var(--bg-color); padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--border-color);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
+                        <span>Subtotal:</span>
+                        <span>৳ ${subtotal}${hasPriceComingSoon ? ' + (কিছু পণ্যের দাম আসবে)' : ''}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
+                        <span>Delivery Charge:</span>
+                        <span id="display-delivery-charge">৳ ${deliveryCharge}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 16px; color: var(--gold-color); border-top: 1px solid var(--border-color); margin-top: 8px; padding-top: 8px;">
+                        <span>Total Amount:</span>
+                        <span id="dynamic-total-amount">৳ ${totalAmount}${hasPriceComingSoon ? ' +' : ''}</span>
+                    </div>
+                    ${hasPriceComingSoon ? '<p style="font-size: 12px; color: #ffb15b; margin-top: 8px; text-align: center;">কিছু পণ্যের দাম শীঘ্রই জানানো হবে। অর্ডার নিশ্চিত করতে WhatsApp এ যোগাযোগ করুন।</p>' : ''}
+                </div>
+
+                <h3 style="color: var(--gold-color); margin-bottom: 15px;">Delivery Information</h3>
+                <form id="checkout-form" onsubmit="submitOrder(event)">
+                    <div class="form-group">
+                        <label>Full Name *</label>
+                        <input type="text" id="cus-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number *</label>
+                        <input type="tel" id="cus-phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Shipping Area (Delivery Charge) *</label>
+                        <select id="shipping-select" required onchange="updateDeliveryCharge()">
+                            <option value="60">Inside Feni (৳60)</option>
+                            <option value="130">Outside Feni (৳130)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>City *</label>
+                        <input type="text" id="cus-city" required>
+                    </div>
+                    <div class="form-group">
+                        <label>District *</label>
+                        <input type="text" id="cus-district" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Upazila / Thana *</label>
+                        <input type="text" id="cus-thana" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Full Address *</label>
+                        <input type="text" id="cus-address" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Order Notes (Optional)</label>
+                        <textarea id="cus-notes" rows="2"></textarea>
+                    </div>
+
+                    <h3 style="color: var(--gold-color); margin: 20px 0 10px 0;">Payment Method *</h3>
+                    <div class="payment-methods-box">
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="Cash on Delivery" onchange="handlePaymentChange()" checked>
+                            <img src="https://i.ibb.co/wNdmjHM2/images-1.png" alt="Cash on Delivery">
+                            <span>Cash on Delivery (COD)</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="Bkash" onchange="handlePaymentChange()">
+                            <img src="https://i.ibb.co/rGn4KLgk/images.png" alt="bKash">
+                            <span>bKash</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="Nagad" onchange="handlePaymentChange()">
+                            <img src="https://i.ibb.co/RpnrLg8f/images-1.jpg" alt="Nagad">
+                            <span>Nagad</span>
+                        </label>
+                    </div>
+
+                    <div class="instruction-box" id="cod-instruction-box">
+                        <h4><i class="fas fa-info-circle"></i> ক্যাশ অন ডেলিভারি নির্দেশিকা:</h4>
+                        <p>ডেলিভারি চার্জ অগ্রিম <strong style="color: var(--gold-color);">৳ <span id="cod-amount-text">60</span></strong> প্রদান করতে হবে। পণ্য হাতে পেয়ে, ডেলিভারি ম্যানের সামনে চেক করে বাকি টাকা পরিশোধ করতে পারবেন।</p>
+                        <div style="font-size: 13px; font-weight: 600; margin-top: 6px;">👉 বিকাশ নম্বর (Personal):</div>
+                        <div class="number-row">
+                            <span style="font-weight: bold; color: var(--gold-color); font-size: 15px;">01832140613</span>
+                            <button type="button" class="copy-btn" onclick="copyNumber('01832140613', 'bKash')"><i class="fas fa-copy"></i> কপি করুন</button>
+                        </div>
+                        <div class="form-group" style="margin-top: 15px;">
+                            <label>প্রেরকের নম্বর *</label>
+                            <input type="tel" id="cod-sender-input" placeholder="017xxxxxxxx">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>ট্রানজেকশন আইডি (TrxID) *</label>
+                            <input type="text" id="cod-trx-input" placeholder="যেমন: 9L8A7B6C">
+                        </div>
+                    </div>
+
+                    <div class="instruction-box" id="bkash-instruction-box">
+                        <h4><i class="fas fa-shield-alt"></i> বিকাশ পেমেন্ট নির্দেশিকা:</h4>
+                        <p>সম্পূর্ণ পেমেন্টের জন্য নিচের নম্বরে Send Money করুন: <strong style="color: var(--gold-color); font-size: 15px;">৳ <span id="bkash-amount-text">0</span></strong></p>
+                        <div style="font-size: 13px; font-weight: 600; margin-top: 6px;">👉 বিকাশ নম্বর (Personal):</div>
+                        <div class="number-row">
+                            <span style="font-weight: bold; color: var(--gold-color); font-size: 15px;">01832140613</span>
+                            <button type="button" class="copy-btn" onclick="copyNumber('01832140613', 'bKash')"><i class="fas fa-copy"></i> কপি করুন</button>
+                        </div>
+                        <div class="form-group" style="margin-top: 15px;">
+                            <label>আপনার বিকাশ নম্বর *</label>
+                            <input type="tel" id="bkash-sender-input" placeholder="017xxxxxxxx">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>ট্রানজেকশন আইডি (TrxID) *</label>
+                            <input type="text" id="bkash-trx-input" placeholder="যেমন: 9L8A7B6C">
+                        </div>
+                    </div>
+
+                    <div class="instruction-box" id="nagad-instruction-box">
+                        <h4><i class="fas fa-wallet"></i> নগদ পেমেন্ট নির্দেশিকা:</h4>
+                        <p>সম্পূর্ণ পেমেন্টের জন্য নিচের নম্বরে Send Money করুন: <strong style="color: var(--gold-color); font-size: 15px;">৳ <span id="nagad-amount-text">0</span></strong></p>
+                        <div style="font-size: 13px; font-weight: 600; margin-top: 6px;">👉 নগদ নম্বর (Personal):</div>
+                        <div class="number-row">
+                            <span style="font-weight: bold; color: var(--gold-color); font-size: 15px;">01832140613</span>
+                            <button type="button" class="copy-btn" onclick="copyNumber('01832140613', 'Nagad')"><i class="fas fa-copy"></i> কপি করুন</button>
+                        </div>
+                        <div class="form-group" style="margin-top: 15px;">
+                            <label>আপনার নগদ নম্বর *</label>
+                            <input type="tel" id="nagad-sender-input" placeholder="017xxxxxxxx">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>ট্রানজেকশন আইডি (TrxID) *</label>
+                            <input type="text" id="nagad-trx-input" placeholder="যেমন: 9L8A7B6C">
+                        </div>
+                    </div>
+
+                    <button type="submit" style="margin-top: 25px; width: 100%; background: var(--gold-color); color: #0b0b0d; border: none; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer;">Place Order</button>
+                </form>`;
+                
+                let activeShippingVal = deliveryCharge;
+                cartContainer.innerHTML = html;
+                if(document.getElementById('shipping-select')) {
+                    document.getElementById('shipping-select').value = activeShippingVal;
+                }
+                handlePaymentChange();
+            }
+        }
+              function submitOrder(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('cus-name').value.trim();
+            const phone = document.getElementById('cus-phone').value.trim();
+            const city = document.getElementById('cus-city').value.trim();
+            const district = document.getElementById('cus-district').value.trim();
+            const thana = document.getElementById('cus-thana').value.trim();
+            const address = document.getElementById('cus-address').value.trim();
+            const notes = document.getElementById('cus-notes') ? document.getElementById('cus-notes').value.trim() : '';
+            const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
+
+            if(!name || !phone || !city || !district || !thana || !address) {
+                alert('Please fill in all required delivery information fields.');
+                return;
+            }
+
+            let senderNumber = '';
+            let trxId = '';
+
+            if(selectedPayment === 'Cash on Delivery') {
+                senderNumber = document.getElementById('cod-sender-input').value.trim();
+                trxId = document.getElementById('cod-trx-input').value.trim();
+                if(!senderNumber || !trxId) {
+                    alert('Please provide both sender number and transaction ID to confirm delivery charge for Cash on Delivery.');
+                    return;
+                }
+            } else if(selectedPayment === 'Bkash') {
+                senderNumber = document.getElementById('bkash-sender-input').value.trim();
+                trxId = document.getElementById('bkash-trx-input').value.trim();
+                if(!senderNumber || !trxId) {
+                    alert('Please provide sender number and transaction ID for bKash payment.');
+                    return;
+                }
+            } else if(selectedPayment === 'Nagad') {
+                senderNumber = document.getElementById('nagad-sender-input').value.trim();
+                trxId = document.getElementById('nagad-trx-input').value.trim();
+                if(!senderNumber || !trxId) {
+                    alert('Please provide sender number and transaction ID for Nagad payment.');
+                    return;
+                }
+            }
+
+            let subtotal = 0;
+            let hasPriceComingSoon = false;
+            cart.forEach(item => {
+                if(typeof item.price === 'number') {
+                    subtotal += (item.price * item.quantity);
+                } else {
+                    hasPriceComingSoon = true;
+                }
+            });
+            const shippingSelect = document.getElementById('shipping-select');
+            const deliveryCharge = shippingSelect ? parseInt(shippingSelect.value) : 60;
+            const totalAmount = subtotal + deliveryCharge;
+            const shippingAreaText = (deliveryCharge === 60) ? 'Inside Feni (৳60)' : 'Outside Feni (৳130)';
+
+            // Generate Order ID
+            const orderId = generateOrderId();
+
+            let productsText = '';
+            cart.forEach((item, index) => {
+                let priceStr = (typeof item.price === 'number') ? ('৳' + item.price) : 'Price Coming Soon';
+                let lineTotal = (typeof item.price === 'number') ? ('৳' + (item.price * item.quantity)) : 'TBD';
+                let meta = '';
+                if(item.size) meta += ' [Size: ' + item.size + ']';
+                if(item.color) meta += ' [Color: ' + item.color + ']';
+                productsText += `%0A${index + 1}. ${item.name}${meta} - ${priceStr} × ${item.quantity} = ${lineTotal}`;
+            });
+
+            let subtotalText = '৳' + subtotal + (hasPriceComingSoon ? ' + (কিছু আইটেমের দাম আসবে)' : '');
+            let totalText = '৳' + totalAmount + (hasPriceComingSoon ? ' +' : '');
+
+            // ========== SAVE ORDER TO FIREBASE ==========
+            if(window.db && typeof window.db === 'object') {
+                try {
+                    const { addDoc, collection } = window;
+                    // Firebase will save order (using module import via CDN in head)
+                    // Fallback: save to localStorage
+                    let orders = JSON.parse(localStorage.getItem('burqa_orders')) || [];
+                    orders.unshift({
+                        orderId: orderId,
+                        name: name,
+                        phone: phone,
+                        city: city,
+                        district: district,
+                        thana: thana,
+                        address: address,
+                        notes: notes,
+                        products: cart,
+                        subtotal: subtotal,
+                        deliveryCharge: deliveryCharge,
+                        totalAmount: totalAmount,
+                        paymentMethod: selectedPayment,
+                        senderNumber: senderNumber,
+                        trxId: trxId,
+                        date: new Date().toISOString()
+                    });
+                    localStorage.setItem('burqa_orders', JSON.stringify(orders));
+                } catch(e) {
+                    console.log('Order save fallback:', e);
+                }
+            }
+            // ========== END SAVE ==========
+
+            let whatsappMessage = `👑 *New Order Received - Burqa Bazar* 👑%0A` +
+                                  `-----------------------------------%0A` +
+                                  `🔖 *Order ID: ${orderId}*%0A` +
+                                  `-----------------------------------%0A` +
+                                  `👤 *Customer Details:*%0A` +
+                                  `• Name: ${name}%0A` +
+                                  `• Phone: ${phone}%0A` +
+                                  `• City: ${city}%0A` +
+                                  `• District: ${district}%0A` +
+                                  `• Thana: ${thana}%0A` +
+                                  `• Address: ${address}%0A` +
+                                  `• Notes: ${notes ? notes : 'None'}%0A%0A` +
+                                  `🛍️ *Ordered Products:*` +
+                                  `${productsText}%0A%0A` +
+                                  `-----------------------------------%0A` +
+                                  `💰 *Payment Summary:*%0A` +
+                                  `• Subtotal: ${subtotalText}%0A` +
+                                  `• Delivery Area: ${shippingAreaText}%0A` +
+                                  `• Total Amount: ${totalText}%0A` +
+                                  `• Payment Method: ${selectedPayment}%0A` +
+                                  `• Sender Number: ${senderNumber}%0A` +
+                                  `• TrxID: ${trxId}%0A` +
+                                  `-----------------------------------%0A` +
+                                  `📌 *আপনার অর্ডার ID: ${orderId}*%0A` +
+                                  `(এই ID টি সংরক্ষণ করুন অর্ডার ট্র্যাক করতে)%0A` +
+                                  `-----------------------------------`;
+
+            const ownerWhatsAppNumber = '8801832140613';
+            const whatsappURL = `https://wa.me/${ownerWhatsAppNumber}?text=${whatsappMessage}`;
+
+            // Track purchase in Analytics
+            trackEvent('purchase', {
+                transaction_id: orderId,
+                currency: 'BDT',
+                value: totalAmount,
+                shipping: deliveryCharge,
+                payment_type: selectedPayment,
+                items: cart.map(item => ({
+                    item_id: item.id,
+                    item_name: item.name,
+                    item_category: item.category || '',
+                    item_variant: (item.size || '') + ' ' + (item.color || ''),
+                    quantity: item.quantity,
+                    price: typeof item.price === 'number' ? item.price : 0
+                }))
+            });
+
+            showToast('✅ Order ID: ' + orderId + ' - Redirecting...');
+
+            cart = [];
+            localStorage.removeItem('burqa_cart');
+            updateCartUI();
+            renderMiniCart();
+
+            setTimeout(() => {
+                window.open(whatsappURL, '_blank');
+                switchTab('home');
+            }, 2000);
+        }
+
+        // ============================================
+        // ORDER ID GENERATOR
+        // Format: BQ-YYYYMMDD-NNNN
+        // ============================================
+        function generateOrderId() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const dateStr = `${year}${month}${day}`;
+
+            const counterKey = 'burqa_order_counter_' + dateStr;
+            let counter = parseInt(localStorage.getItem(counterKey) || '0') + 1;
+            localStorage.setItem(counterKey, counter.toString());
+
+            const allKeys = Object.keys(localStorage);
+            allKeys.forEach(key => {
+                if(key.startsWith('burqa_order_counter_') && key !== counterKey) {
+                    localStorage.removeItem(key);
+                }
+            });
+
+            const counterStr = String(counter).padStart(4, '0');
+            return `BQ-${dateStr}-${counterStr}`;
+        }
+
+        // ============================================
+        // AUTO-CLOSE ON ESC KEY
+        // ============================================
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'Escape') {
+                closeMiniCart();
+                closeShareModal();
+                closeImageModal();
+            }
+        });
+    </script>
+</body>
+      </html>
